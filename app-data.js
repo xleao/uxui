@@ -319,6 +319,115 @@ function setupNavigation(activePage) {
             Auth.logout();
         });
     });
+
+    // ── INYECTAR NAVEGACIÓN MÓVIL ──
+    setupMobileNav(activePage, session);
+}
+
+/**
+ * Inyecta hamburguesa + sidebar deslizable + bottom nav en móvil.
+ */
+function setupMobileNav(activePage, session) {
+    // Evitar doble inyección
+    if (document.getElementById("mobile-nav-injected")) return;
+    const marker = document.createElement("div");
+    marker.id = "mobile-nav-injected";
+    marker.style.display = "none";
+    document.body.appendChild(marker);
+
+    // Inyectar estilos móviles
+    const style = document.createElement("style");
+    style.textContent = `
+        @media(max-width:767px){
+            body>div>aside, body>aside { display:none!important; }
+            main, body>div>main { margin-left:0!important; }
+            .mobile-bottom-spacer { padding-bottom:70px!important; }
+        }
+        #mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;opacity:0;pointer-events:none;transition:opacity .3s}
+        #mob-overlay.open{opacity:1;pointer-events:auto}
+        #mob-sidebar{position:fixed;top:0;left:-280px;width:270px;height:100%;background:#f7fafc;border-right:2px solid #181c1e;z-index:999;transition:left .3s;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+        #mob-sidebar.open{left:0}
+        #mob-bottomnav{position:fixed;bottom:0;left:0;right:0;background:#f7fafc;border-top:2px solid #181c1e;z-index:997;display:none;justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px)}
+        @media(max-width:767px){#mob-bottomnav{display:flex}}
+        #mob-bottomnav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:#434654;text-decoration:none;padding:4px 8px;transition:color .2s}
+        #mob-bottomnav a.active{color:#0052cc}
+        #mob-bottomnav a .material-symbols-outlined{font-size:22px}
+        #mob-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+        @media(max-width:767px){#mob-hamburger{display:flex;align-items:center}}
+    `;
+    document.head.appendChild(style);
+
+    // Hamburger button - insertar en el primer header
+    const header = document.querySelector("header");
+    if (header) {
+        const firstChild = header.querySelector("div") || header.firstElementChild;
+        if (firstChild) {
+            const burger = document.createElement("button");
+            burger.id = "mob-hamburger";
+            burger.innerHTML = '<span class="material-symbols-outlined" style="font-size:28px;color:#181c1e">menu</span>';
+            firstChild.insertBefore(burger, firstChild.firstChild);
+        }
+    }
+
+    // Overlay
+    const overlay = document.createElement("div");
+    overlay.id = "mob-overlay";
+    document.body.appendChild(overlay);
+
+    // Sidebar
+    const isAdmin = session.rol === "admin";
+    const links = [
+        { href: "dashboard principal personal.html", icon: "dashboard", label: "Dashboard", page: "dashboard" },
+        { href: "personal.html", icon: "groups", label: "Personal", page: "personal" },
+        { href: "gestion incidencias.html", icon: "error_outline", label: "Incidencias", page: "incidencias" },
+        { href: "reportes.html", icon: "assessment", label: "Reportes", page: "reportes" },
+    ];
+    if (isAdmin) links.push({ href: "usuarios.html", icon: "admin_panel_settings", label: "Usuarios", page: "usuarios" });
+
+    const sidebar = document.createElement("div");
+    sidebar.id = "mob-sidebar";
+    sidebar.innerHTML = `
+        <div style="margin-bottom:16px">
+            <h2 style="font-family:Inter;font-size:20px;font-weight:900;color:#181c1e">Soluciones Técnicas</h2>
+            <p style="font-size:12px;color:#434654">Andinas S.A.C.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#ebeef0;border:1px solid #181c1e;margin-bottom:12px">
+            <div style="width:36px;height:36px;border-radius:50%;background:#0052cc;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;border:2px solid #181c1e">${session.avatar}</div>
+            <div><div style="font-weight:700;font-size:14px">${session.nombre}</div><div style="font-size:11px;color:#434654">${session.rolNombre||session.rol}</div></div>
+        </div>
+        ${links.map(l => `
+            <a href="${l.href}" style="display:flex;align-items:center;gap:10px;padding:10px;font-family:Inter;font-size:14px;text-decoration:none;transition:all .2s;border-radius:8px;${activePage===l.page?'background:#0052cc;color:#fff;font-weight:700;border:2px solid #181c1e':'color:#434654;border:2px solid transparent'}" ${activePage===l.page?'':'onmouseover="this.style.background=\'#e0e3e5\'" onmouseout="this.style.background=\'transparent\'"'}>
+                <span class="material-symbols-outlined" style="font-size:20px">${l.icon}</span>${l.label}
+            </a>
+        `).join("")}
+        <div style="margin-top:auto;padding-top:12px;border-top:2px solid #181c1e">
+            <button id="mob-logout" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border:2px solid #181c1e;background:#f7fafc;font-family:Inter;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#ba1a1a';this.style.color='#fff'" onmouseout="this.style.background='#f7fafc';this.style.color='#181c1e'">
+                <span class="material-symbols-outlined" style="font-size:20px">logout</span>Cerrar Sesión
+            </button>
+        </div>
+    `;
+    document.body.appendChild(sidebar);
+
+    // Bottom nav
+    const bottomNav = document.createElement("nav");
+    bottomNav.id = "mob-bottomnav";
+    const bottomLinks = links.slice(0, 4); // max 4 in bottom nav
+    bottomNav.innerHTML = bottomLinks.map(l =>
+        `<a href="${l.href}" class="${activePage===l.page?'active':''}"><span class="material-symbols-outlined">${l.icon}</span>${l.label}</a>`
+    ).join("");
+    document.body.appendChild(bottomNav);
+
+    // Agregar spacer al body para bottom nav
+    document.body.classList.add("mobile-bottom-spacer");
+
+    // Event listeners
+    const openSidebar = () => { sidebar.classList.add("open"); overlay.classList.add("open"); };
+    const closeSidebar = () => { sidebar.classList.remove("open"); overlay.classList.remove("open"); };
+
+    const burger = document.getElementById("mob-hamburger");
+    if (burger) burger.addEventListener("click", openSidebar);
+    overlay.addEventListener("click", closeSidebar);
+    document.getElementById("mob-logout").addEventListener("click", () => Auth.logout());
 }
 
 /**
