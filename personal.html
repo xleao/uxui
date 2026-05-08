@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Personal | STA S.A.C.</title>
+<meta name="description" content="Gestión de personal y colaboradores de STA S.A.C."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f7fafc", "surface-tint": "#0c56d0", "tertiary-container": "#a33500",
+                    "surface-container": "#ebeef0", "on-secondary-container": "#596376", "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff", "on-secondary-fixed-variant": "#3d4759", "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#b2c5ff", "primary-container": "#0052cc", "on-error": "#ffffff",
+                    "tertiary": "#7b2600", "on-surface": "#181c1e", "surface-dim": "#d7dadc",
+                    "tertiary-fixed": "#ffdbcf", "outline-variant": "#c3c6d6", "on-tertiary-container": "#ffc6b2",
+                    "on-tertiary-fixed": "#380d00", "surface-bright": "#f7fafc", "surface": "#f7fafc",
+                    "error": "#ba1a1a", "on-tertiary-fixed-variant": "#812800", "primary": "#003d9b",
+                    "surface-container-highest": "#e0e3e5", "on-tertiary": "#ffffff", "secondary-fixed": "#d9e3f9",
+                    "tertiary-fixed-dim": "#ffb59b", "on-secondary-fixed": "#121c2c", "secondary-container": "#d6e0f6",
+                    "inverse-primary": "#b2c5ff", "surface-container-low": "#f1f4f6", "on-surface-variant": "#434654",
+                    "error-container": "#ffdad6", "primary-fixed": "#dae2ff", "secondary": "#555f71",
+                    "inverse-on-surface": "#eef1f3", "on-primary-fixed-variant": "#0040a2", "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133", "on-background": "#181c1e", "on-error-container": "#93000a",
+                    "outline": "#737685", "surface-container-high": "#e5e9eb", "secondary-fixed-dim": "#bdc7dc",
+                    "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff"
+                },
+                "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                "spacing": { "gutter": "24px", "margin": "32px", "sm": "8px", "md": "16px", "unit": "8px", "xs": "4px", "lg": "24px", "xl": "40px" },
+                "fontFamily": { "button": ["Inter"], "body-sm": ["Inter"], "h1": ["Inter"], "h3": ["Inter"], "h2": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "label-caps": ["Inter"] },
+                "fontSize": {
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .balsamiq-shadow { box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1); }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<script src="app-data.js"></script>
+
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-background border-r-2 border-on-surface p-md gap-md fixed z-20">
+    <div class="mb-xl">
+        <h1 class="font-h3 text-h3 font-black text-on-surface">Soluciones Técnicas</h1>
+        <p class="font-body-sm text-on-surface-variant">Andinas S.A.C.</p>
+    </div>
+    <nav class="flex flex-col gap-sm flex-grow">
+        <a class="text-on-surface-variant flex items-center gap-md p-md hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="dashboard principal personal.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Dashboard</span>
+        </a>
+        <!-- Active Tab: Personal -->
+        <a class="bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl flex items-center gap-md p-md transition-all duration-200 ease-in-out" href="personal.html">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="font-body-md text-body-md">Personal</span>
+        </a>
+        <a class="text-on-surface-variant flex items-center gap-md p-md hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="gestion incidencias.html">
+            <span class="material-symbols-outlined">error_outline</span>
+            <span class="font-body-md text-body-md">Incidencias</span>
+        </a>
+        <a class="text-on-surface-variant flex items-center gap-md p-md hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="reportes.html">
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+        </a>
+    </nav>
+    <button data-action="logout" class="mt-auto border-2 border-on-surface p-md font-button text-button flex items-center justify-center gap-sm hover:bg-error hover:text-on-error transition-all">
+        <span class="material-symbols-outlined">logout</span>
+        Cerrar Sesión
+    </button>
+</aside>
+
+<!-- Main Content -->
+<main class="flex-grow md:ml-64">
+    <!-- TopNavBar -->
+    <header class="flex justify-between items-center w-full px-margin py-sm bg-surface border-b-2 border-on-surface sticky top-0 z-10">
+        <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-primary">search</span>
+            <input id="search-input" class="bg-transparent border-none focus:ring-0 font-body-md text-body-md w-64" placeholder="Buscar colaborador..." type="text"/>
+        </div>
+        <div class="flex items-center gap-lg">
+            <div class="flex gap-md">
+                <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-colors">notifications</span>
+                <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-colors">settings</span>
+            </div>
+            <div class="flex items-center gap-sm">
+                <div class="w-10 h-10 border-2 border-on-surface overflow-hidden bg-primary-container flex items-center justify-center">
+                    <span data-user-avatar class="text-white font-bold">RM</span>
+                </div>
+                <span data-user-name class="text-body-sm font-semibold hidden lg:inline">Usuario</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Canvas -->
+    <div class="p-margin">
+        <!-- Summary Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+            <div class="bg-surface border-2 border-on-surface p-lg balsamiq-shadow">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-label-caps text-label-caps uppercase text-on-surface-variant mb-xs">Total Personal</p>
+                        <h2 class="font-h1 text-h1 font-black" id="total-personal">--</h2>
+                    </div>
+                    <span class="material-symbols-outlined text-primary-container text-4xl">badge</span>
+                </div>
+            </div>
+            <div class="bg-surface border-2 border-on-surface p-lg balsamiq-shadow">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-label-caps text-label-caps uppercase text-on-surface-variant mb-xs">Técnicos</p>
+                        <h2 class="font-h1 text-h1 font-black" id="total-tecnicos">--</h2>
+                    </div>
+                    <span class="material-symbols-outlined text-tertiary text-4xl">engineering</span>
+                </div>
+            </div>
+            <div class="bg-primary-container border-2 border-on-surface p-lg balsamiq-shadow flex items-center justify-center cursor-pointer active:scale-95 transition-transform group" id="btn-add-person">
+                <div class="flex items-center gap-md text-on-primary">
+                    <span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform">add_circle</span>
+                    <span class="font-button text-button">Añadir Colaborador</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters & Table -->
+        <div class="bg-surface border-2 border-on-surface balsamiq-shadow">
+            <!-- Filter Bar -->
+            <div class="p-md border-b-2 border-on-surface flex flex-wrap items-center justify-between gap-md">
+                <div class="flex items-center gap-sm">
+                    <span class="font-label-caps text-label-caps">Filtrar por Área:</span>
+                    <div class="flex gap-xs" id="filter-buttons">
+                        <button class="px-md py-xs border border-on-surface bg-surface-container-highest font-body-sm text-body-sm filter-btn active" data-filter="Todas">Todas</button>
+                        <button class="px-md py-xs border border-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors filter-btn" data-filter="Operaciones">Operaciones</button>
+                        <button class="px-md py-xs border border-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors filter-btn" data-filter="Sistemas">Sistemas</button>
+                        <button class="px-md py-xs border border-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors filter-btn" data-filter="Administración">Administración</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-on-surface-variant">sort</span>
+                    <span class="font-body-sm text-body-sm">Mostrando: <span class="font-bold" id="showing-count">--</span></span>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container font-label-caps text-label-caps border-b-2 border-on-surface">
+                        <tr>
+                            <th class="px-lg py-md">Nombre</th>
+                            <th class="px-lg py-md">DNI</th>
+                            <th class="px-lg py-md">Cargo</th>
+                            <th class="px-lg py-md">Área</th>
+                            <th class="px-lg py-md">Fecha Ingreso</th>
+                            <th class="px-lg py-md">Estado</th>
+                            <th class="px-lg py-md text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="personal-tbody" class="font-body-md text-body-md">
+                        <!-- JS populated -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="p-md border-t border-on-surface flex items-center justify-between">
+                <p class="font-body-sm text-body-sm text-on-surface-variant" id="pagination-info">Mostrando -- de -- colaboradores</p>
+                <div class="flex gap-xs" id="pagination-controls">
+                    <!-- JS populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Add Person Modal -->
+<div id="add-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="bg-white border-2 border-on-surface balsamiq-shadow p-xl w-full max-w-lg mx-4">
+        <h3 class="font-h2 text-h2 mb-lg">Añadir Colaborador</h3>
+        <form id="add-form" class="space-y-md">
+            <div class="grid grid-cols-2 gap-md">
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-caps text-label-caps">NOMBRE COMPLETO</label>
+                    <input id="new-nombre" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" type="text" required/>
+                </div>
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-caps text-label-caps">DNI</label>
+                    <input id="new-dni" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" type="text" required/>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-md">
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-caps text-label-caps">CARGO</label>
+                    <input id="new-cargo" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" type="text" required/>
+                </div>
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-caps text-label-caps">ÁREA</label>
+                    <select id="new-area" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0">
+                        <option value="Operaciones">Operaciones</option>
+                        <option value="Sistemas">Sistemas</option>
+                        <option value="Administración">Administración</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end gap-md pt-md border-t border-on-surface">
+                <button type="button" id="cancel-add" class="px-lg py-sm border-2 border-on-surface hover:bg-surface-container transition-colors font-button text-button">Cancelar</button>
+                <button type="submit" class="px-lg py-sm bg-primary-container text-white border-2 border-on-surface balsamiq-shadow hover:bg-primary transition-colors font-button text-button">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const session = Auth.requireAuth();
+    if (session) {
+        setupNavigation("personal");
+
+        let currentFilter = "Todas";
+        let currentPage = 1;
+        const perPage = 8;
+
+        function getInitials(name) {
+            return name.split(" ").map(w => w[0]).join("").substring(0, 2).toUpperCase();
+        }
+
+        function getStatusBadge(estado) {
+            const colors = {
+                "Activo": "bg-green-100 text-green-800 border-green-300",
+                "Vacaciones": "bg-yellow-100 text-yellow-800 border-yellow-300",
+                "Licencia": "bg-orange-100 text-orange-800 border-orange-300"
+            };
+            return `<span class="px-sm py-xs border ${colors[estado] || 'bg-gray-100 text-gray-800'} text-xs uppercase font-bold">${estado}</span>`;
+        }
+
+        function renderTable() {
+            let data = DB.personal;
+
+            // Filter
+            if (currentFilter !== "Todas") {
+                data = data.filter(p => p.area === currentFilter);
+            }
+
+            // Search
+            const search = document.getElementById("search-input").value.toLowerCase();
+            if (search) {
+                data = data.filter(p =>
+                    p.nombre.toLowerCase().includes(search) ||
+                    p.dni.includes(search) ||
+                    p.cargo.toLowerCase().includes(search)
+                );
+            }
+
+            // KPIs
+            document.getElementById("total-personal").textContent = DB.personal.length;
+            document.getElementById("total-tecnicos").textContent = DB.personal.filter(p => p.area === "Operaciones").length;
+
+            // Pagination
+            const totalPages = Math.ceil(data.length / perPage);
+            if (currentPage > totalPages) currentPage = 1;
+            const start = (currentPage - 1) * perPage;
+            const pageData = data.slice(start, start + perPage);
+
+            document.getElementById("showing-count").textContent = `${data.length} colaboradores`;
+            document.getElementById("pagination-info").textContent = `Mostrando ${start + 1} a ${Math.min(start + perPage, data.length)} de ${data.length} colaboradores`;
+
+            // Render rows
+            const tbody = document.getElementById("personal-tbody");
+            tbody.innerHTML = pageData.map(p => `
+                <tr class="border-b border-on-surface hover:bg-surface-container-low transition-colors">
+                    <td class="px-lg py-md flex items-center gap-md">
+                        <div class="w-8 h-8 bg-surface-container-highest border border-on-surface flex items-center justify-center font-bold text-xs">${getInitials(p.nombre)}</div>
+                        ${p.nombre}
+                    </td>
+                    <td class="px-lg py-md font-mono">${p.dni}</td>
+                    <td class="px-lg py-md">${p.cargo}</td>
+                    <td class="px-lg py-md">
+                        <span class="px-sm py-xs border border-on-surface bg-background text-xs uppercase font-bold">${p.area}</span>
+                    </td>
+                    <td class="px-lg py-md">${p.fechaIngreso}</td>
+                    <td class="px-lg py-md">${getStatusBadge(p.estado)}</td>
+                    <td class="px-lg py-md text-right">
+                        <div class="flex justify-end gap-md">
+                            <button class="material-symbols-outlined hover:text-primary transition-colors" title="Editar">edit</button>
+                            <button class="material-symbols-outlined hover:text-primary transition-colors" title="Ver">visibility</button>
+                            <button class="material-symbols-outlined hover:text-error transition-colors btn-delete" data-id="${p.id}" title="Eliminar">delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join("");
+
+            // Pagination controls
+            const paginationEl = document.getElementById("pagination-controls");
+            let paginationHTML = `<button class="w-10 h-10 border border-on-surface flex items-center justify-center hover:bg-surface-container-highest transition-colors ${currentPage === 1 ? 'opacity-30 pointer-events-none' : ''}" onclick="changePage(${currentPage - 1})"><span class="material-symbols-outlined">chevron_left</span></button>`;
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                paginationHTML += `<button class="w-10 h-10 border border-on-surface flex items-center justify-center hover:bg-surface-container-highest transition-colors ${i === currentPage ? 'bg-on-surface text-background font-bold' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            paginationHTML += `<button class="w-10 h-10 border border-on-surface flex items-center justify-center hover:bg-surface-container-highest transition-colors ${currentPage === totalPages ? 'opacity-30 pointer-events-none' : ''}" onclick="changePage(${currentPage + 1})"><span class="material-symbols-outlined">chevron_right</span></button>`;
+            paginationEl.innerHTML = paginationHTML;
+
+            // Delete buttons
+            document.querySelectorAll(".btn-delete").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const id = parseInt(btn.dataset.id);
+                    if (confirm("¿Estás seguro de eliminar este colaborador?")) {
+                        const idx = DB.personal.findIndex(p => p.id === id);
+                        if (idx > -1) {
+                            DB.personal.splice(idx, 1);
+                            showToast("Colaborador eliminado");
+                            renderTable();
+                        }
+                    }
+                });
+            });
+        }
+
+        window.changePage = function(page) {
+            currentPage = page;
+            renderTable();
+        };
+
+        // Filter buttons
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => {
+                    b.classList.remove("bg-surface-container-highest");
+                    b.classList.add("hover:bg-surface-container-low");
+                });
+                btn.classList.add("bg-surface-container-highest");
+                btn.classList.remove("hover:bg-surface-container-low");
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                renderTable();
+            });
+        });
+
+        // Search
+        document.getElementById("search-input").addEventListener("input", () => {
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Add modal
+        const modal = document.getElementById("add-modal");
+        document.getElementById("btn-add-person").addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        });
+        document.getElementById("cancel-add").addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        });
+        document.getElementById("add-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const newPerson = {
+                id: DB.personal.length + 100,
+                nombre: document.getElementById("new-nombre").value,
+                dni: document.getElementById("new-dni").value,
+                cargo: document.getElementById("new-cargo").value,
+                area: document.getElementById("new-area").value,
+                fechaIngreso: new Date().toLocaleDateString("es-PE"),
+                estado: "Activo"
+            };
+            DB.personal.push(newPerson);
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.getElementById("add-form").reset();
+            showToast(`${newPerson.nombre} añadido exitosamente`);
+            renderTable();
+        });
+
+        renderTable();
+    }
+</script>
+</body>
+</html>

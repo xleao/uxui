@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reportes | STA S.A.C.</title>
+<meta name="description" content="Panel de reportes avanzados y analítica de STA S.A.C."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f7fafc", "surface-tint": "#0c56d0", "tertiary-container": "#a33500",
+                    "surface-container": "#ebeef0", "on-secondary-container": "#596376", "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff", "on-secondary-fixed-variant": "#3d4759", "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#b2c5ff", "primary-container": "#0052cc", "on-error": "#ffffff",
+                    "tertiary": "#7b2600", "on-surface": "#181c1e", "surface-dim": "#d7dadc",
+                    "tertiary-fixed": "#ffdbcf", "outline-variant": "#c3c6d6", "on-tertiary-container": "#ffc6b2",
+                    "on-tertiary-fixed": "#380d00", "surface-bright": "#f7fafc", "surface": "#f7fafc",
+                    "error": "#ba1a1a", "on-tertiary-fixed-variant": "#812800", "primary": "#003d9b",
+                    "surface-container-highest": "#e0e3e5", "on-tertiary": "#ffffff", "secondary-fixed": "#d9e3f9",
+                    "tertiary-fixed-dim": "#ffb59b", "on-secondary-fixed": "#121c2c", "secondary-container": "#d6e0f6",
+                    "inverse-primary": "#b2c5ff", "surface-container-low": "#f1f4f6", "on-surface-variant": "#434654",
+                    "error-container": "#ffdad6", "primary-fixed": "#dae2ff", "secondary": "#555f71",
+                    "inverse-on-surface": "#eef1f3", "on-primary-fixed-variant": "#0040a2", "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133", "on-background": "#181c1e", "on-error-container": "#93000a",
+                    "outline": "#737685", "surface-container-high": "#e5e9eb", "secondary-fixed-dim": "#bdc7dc",
+                    "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff"
+                },
+                "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                "spacing": { "gutter": "24px", "margin": "32px", "sm": "8px", "md": "16px", "unit": "8px", "xs": "4px", "lg": "24px", "xl": "40px" },
+                "fontFamily": { "button": ["Inter"], "body-sm": ["Inter"], "h1": ["Inter"], "h3": ["Inter"], "h2": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "label-caps": ["Inter"] },
+                "fontSize": {
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .brutalist-card { border: 1px solid #181c1e; box-shadow: 4px 4px 0px 0px #181c1e; }
+    .brutalist-border { border: 1px solid #181c1e; }
+    .brutalist-border-heavy { border: 2px solid #181c1e; }
+</style>
+</head>
+<body class="bg-background font-body-md text-on-background flex min-h-screen">
+<script src="app-data.js"></script>
+
+<!-- SideNavBar -->
+<aside class="bg-background border-r-2 border-on-surface flex flex-col h-screen w-64 left-0 sticky top-0 p-md gap-md">
+    <div class="flex flex-col gap-xs mb-lg">
+        <h1 class="font-h3 text-h3 font-black text-on-surface">Soluciones Técnicas</h1>
+        <p class="font-label-caps text-label-caps text-on-surface-variant">Andinas S.A.C.</p>
+    </div>
+    <nav class="flex flex-col gap-sm flex-grow">
+        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="dashboard principal personal.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="personal.html">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="font-body-md text-body-md">Personal</span>
+        </a>
+        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="gestion incidencias.html">
+            <span class="material-symbols-outlined">error_outline</span>
+            <span class="font-body-md text-body-md">Incidencias</span>
+        </a>
+        <!-- Active: Reportes -->
+        <a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl transition-all duration-200 ease-in-out" href="reportes.html">
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-md border-t brutalist-border">
+        <button data-action="logout" class="w-full flex items-center justify-center gap-sm p-md brutalist-border font-button text-button hover:bg-error hover:text-on-error transition-colors">
+            <span class="material-symbols-outlined">logout</span>
+            Cerrar Sesión
+        </button>
+    </div>
+</aside>
+
+<main class="flex-grow flex flex-col">
+    <!-- TopNavBar -->
+    <header class="bg-surface flex justify-between items-center w-full px-margin py-sm border-b-2 border-on-surface sticky top-0 z-10">
+        <div class="flex items-center gap-md">
+            <div class="relative w-96">
+                <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                <input class="w-full pl-xl pr-md py-xs bg-white brutalist-border focus:ring-2 focus:ring-primary focus:outline-none" placeholder="Buscar reportes o analíticas..." type="text"/>
+            </div>
+        </div>
+        <div class="flex items-center gap-lg">
+            <div class="flex items-center gap-md">
+                <span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high p-xs">notifications</span>
+                <span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high p-xs">settings</span>
+            </div>
+            <div class="h-10 w-10 bg-primary-container brutalist-border flex items-center justify-center overflow-hidden">
+                <span data-user-avatar class="text-white font-bold">RM</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="p-margin flex flex-col gap-xl max-w-7xl mx-auto w-full">
+        <section class="flex flex-col gap-sm">
+            <h2 class="font-h1 text-h1 text-on-surface">Panel de Reportes Avanzados</h2>
+            <p class="font-body-lg text-body-lg text-on-surface-variant">Resumen ejecutivo y analítica de desempeño operativa.</p>
+        </section>
+
+        <!-- KPI Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+            <div class="bg-white p-lg brutalist-card flex flex-col gap-xs">
+                <p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Incidencias</p>
+                <div class="flex items-end justify-between">
+                    <span class="font-h1 text-h1 font-black" id="rpt-total">--</span>
+                    <span class="text-error font-bold flex items-center text-sm">+12% <span class="material-symbols-outlined text-sm">trending_up</span></span>
+                </div>
+            </div>
+            <div class="bg-white p-lg brutalist-card flex flex-col gap-xs">
+                <p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Tiempo de Respuesta</p>
+                <div class="flex items-end justify-between">
+                    <span class="font-h1 text-h1 font-black">2.4h</span>
+                    <span class="text-primary font-bold flex items-center text-sm">-15% <span class="material-symbols-outlined text-sm">trending_down</span></span>
+                </div>
+            </div>
+            <div class="bg-white p-lg brutalist-card flex flex-col gap-xs">
+                <p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Costos Operativos</p>
+                <div class="flex items-end justify-between">
+                    <span class="font-h1 text-h1 font-black">S/ 42.5k</span>
+                    <span class="text-on-surface-variant font-bold flex items-center text-sm">Estable</span>
+                </div>
+            </div>
+            <div class="bg-white p-lg brutalist-card flex flex-col gap-xs">
+                <p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Eficiencia Equipo</p>
+                <div class="flex items-end justify-between">
+                    <span class="font-h1 text-h1 font-black">94.2%</span>
+                    <span class="text-primary font-bold flex items-center text-sm">+2.1% <span class="material-symbols-outlined text-sm">trending_up</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+            <!-- Line Chart -->
+            <div class="lg:col-span-2 bg-white p-lg brutalist-card flex flex-col gap-md">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-h3 text-h3">Incidencias por Mes</h3>
+                    <span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+                </div>
+                <div class="w-full h-64 bg-surface-container-low brutalist-border flex items-center justify-center relative overflow-hidden">
+                    <svg class="w-full h-full p-md" viewBox="0 0 400 200">
+                        <polyline fill="none" points="0,150 50,120 100,160 150,80 200,100 250,40 300,60 350,20" stroke="#003d9b" stroke-width="3"></polyline>
+                        <circle cx="50" cy="120" fill="#003d9b" r="4"></circle>
+                        <circle cx="150" cy="80" fill="#003d9b" r="4"></circle>
+                        <circle cx="250" cy="40" fill="#003d9b" r="4"></circle>
+                        <circle cx="350" cy="20" fill="#003d9b" r="4"></circle>
+                        <line stroke="#737685" stroke-dasharray="4" x1="0" x2="400" y1="180" y2="180"></line>
+                        <line stroke="#737685" stroke-dasharray="4" x1="0" x2="400" y1="140" y2="140"></line>
+                        <line stroke="#737685" stroke-dasharray="4" x1="0" x2="400" y1="100" y2="100"></line>
+                        <line stroke="#737685" stroke-dasharray="4" x1="0" x2="400" y1="60" y2="60"></line>
+                    </svg>
+                    <div class="absolute bottom-2 left-0 right-0 flex justify-between px-md font-label-caps text-[10px] text-on-surface-variant">
+                        <span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie Chart -->
+            <div class="bg-white p-lg brutalist-card flex flex-col gap-md">
+                <h3 class="font-h3 text-h3">Distribución de Costos</h3>
+                <div class="flex-grow flex items-center justify-center p-md">
+                    <div class="relative w-48 h-48 rounded-full brutalist-border overflow-hidden" style="background: conic-gradient(#0052cc 0% 45%, #7b2600 45% 75%, #555f71 75% 100%)">
+                        <div class="absolute inset-8 bg-white rounded-full brutalist-border flex items-center justify-center font-bold">S/ 42k</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-xs">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-3 h-3 bg-primary-container brutalist-border"></div>
+                        <span class="text-sm font-body-sm">Mano de Obra (45%)</span>
+                    </div>
+                    <div class="flex items-center gap-sm">
+                        <div class="w-3 h-3 bg-tertiary brutalist-border"></div>
+                        <span class="text-sm font-body-sm">Repuestos (30%)</span>
+                    </div>
+                    <div class="flex items-center gap-sm">
+                        <div class="w-3 h-3 bg-secondary brutalist-border"></div>
+                        <span class="text-sm font-body-sm">Logística (25%)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="bg-white brutalist-card flex flex-col">
+            <div class="p-lg border-b brutalist-border flex justify-between items-center bg-surface-container-low">
+                <h3 class="font-h3 text-h3">Detalle de Incidencias Recientes</h3>
+                <div class="flex gap-md">
+                    <button class="px-md py-xs brutalist-border font-button text-sm flex items-center gap-xs bg-white hover:bg-surface-container transition-colors">
+                        <span class="material-symbols-outlined text-sm">filter_list</span> Filtrar
+                    </button>
+                    <button id="btn-export" class="px-md py-xs brutalist-border font-button text-sm flex items-center gap-xs bg-white hover:bg-surface-container transition-colors">
+                        <span class="material-symbols-outlined text-sm">download</span> Exportar
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-white">
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">ID</th>
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">FECHA</th>
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">CATEGORÍA</th>
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">ESTADO</th>
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">ASIGNADO</th>
+                            <th class="p-md text-left font-label-caps brutalist-border bg-surface-container-lowest">ACCIÓN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rpt-tbody" class="divide-y brutalist-border">
+                        <!-- JS populated -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-md flex justify-between items-center bg-surface-container-low border-t brutalist-border">
+                <span class="text-sm font-body-sm text-on-surface-variant" id="rpt-pagination">Mostrando -- incidencias</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto p-margin border-t brutalist-border bg-surface-container-lowest">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-md">
+            <p class="font-body-sm text-on-surface-variant">© 2024 Soluciones Técnicas Andinas S.A.C. - Sistema de Gestión de Analítica.</p>
+            <div class="flex gap-lg">
+                <a class="font-label-caps text-on-surface-variant hover:text-primary underline underline-offset-4" href="#">Términos de Servicio</a>
+                <a class="font-label-caps text-on-surface-variant hover:text-primary underline underline-offset-4" href="#">Políticas de Datos</a>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<script>
+    const session = Auth.requireAuth();
+    if (session) {
+        setupNavigation("reportes");
+
+        // KPI
+        document.getElementById("rpt-total").textContent = DB.reportes.totalIncidencias.toLocaleString();
+
+        // Table
+        function getStatusBadge(s) {
+            const map = {
+                "Pendiente": "bg-secondary-container text-on-secondary-container",
+                "En Proceso": "bg-tertiary-fixed text-on-tertiary-fixed",
+                "Resuelto": "bg-primary-container text-on-primary-container",
+                "Cerrado": "bg-inverse-on-surface"
+            };
+            return `<span class="px-md py-1 ${map[s] || ''} text-[12px] font-bold rounded-full border border-on-surface">${s.toUpperCase()}</span>`;
+        }
+
+        const tbody = document.getElementById("rpt-tbody");
+        DB.incidencias.forEach(i => {
+            tbody.innerHTML += `
+                <tr class="hover:bg-surface-container-low transition-colors">
+                    <td class="p-md font-body-sm brutalist-border">#${i.id}</td>
+                    <td class="p-md font-body-sm brutalist-border">${i.fecha}</td>
+                    <td class="p-md font-body-sm brutalist-border">${i.categoria}</td>
+                    <td class="p-md brutalist-border">${getStatusBadge(i.estado)}</td>
+                    <td class="p-md font-body-sm brutalist-border">${i.asignado}</td>
+                    <td class="p-md brutalist-border">
+                        <a href="detalle incidencias.html?id=${i.id}" class="text-primary font-bold hover:underline">Ver Detalle</a>
+                    </td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("rpt-pagination").textContent = `Mostrando ${DB.incidencias.length} incidencias`;
+
+        // Export button
+        document.getElementById("btn-export").addEventListener("click", () => {
+            showToast("Exportación iniciada (simulada)", "info");
+        });
+    }
+</script>
+</body>
+</html>

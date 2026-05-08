@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Incidencias | STA S.A.C.</title>
+<meta name="description" content="Gestión y seguimiento de incidencias técnicas de STA S.A.C."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f7fafc", "surface-tint": "#0c56d0", "tertiary-container": "#a33500",
+                    "surface-container": "#ebeef0", "on-secondary-container": "#596376", "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff", "on-secondary-fixed-variant": "#3d4759", "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#b2c5ff", "primary-container": "#0052cc", "on-error": "#ffffff",
+                    "tertiary": "#7b2600", "on-surface": "#181c1e", "surface-dim": "#d7dadc",
+                    "tertiary-fixed": "#ffdbcf", "outline-variant": "#c3c6d6", "on-tertiary-container": "#ffc6b2",
+                    "on-tertiary-fixed": "#380d00", "surface-bright": "#f7fafc", "surface": "#f7fafc",
+                    "error": "#ba1a1a", "on-tertiary-fixed-variant": "#812800", "primary": "#003d9b",
+                    "surface-container-highest": "#e0e3e5", "on-tertiary": "#ffffff", "secondary-fixed": "#d9e3f9",
+                    "tertiary-fixed-dim": "#ffb59b", "on-secondary-fixed": "#121c2c", "secondary-container": "#d6e0f6",
+                    "inverse-primary": "#b2c5ff", "surface-container-low": "#f1f4f6", "on-surface-variant": "#434654",
+                    "error-container": "#ffdad6", "primary-fixed": "#dae2ff", "secondary": "#555f71",
+                    "inverse-on-surface": "#eef1f3", "on-primary-fixed-variant": "#0040a2", "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133", "on-background": "#181c1e", "on-error-container": "#93000a",
+                    "outline": "#737685", "surface-container-high": "#e5e9eb", "secondary-fixed-dim": "#bdc7dc",
+                    "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff"
+                },
+                "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                "spacing": { "gutter": "24px", "margin": "32px", "sm": "8px", "md": "16px", "unit": "8px", "xs": "4px", "lg": "24px", "xl": "40px" },
+                "fontFamily": { "button": ["Inter"], "body-sm": ["Inter"], "h1": ["Inter"], "h3": ["Inter"], "h2": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "label-caps": ["Inter"] },
+                "fontSize": {
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .wireframe-shadow { box-shadow: 4px 4px 0px 0px #181c1e; }
+    .wireframe-shadow-sm { box-shadow: 2px 2px 0px 0px #181c1e; }
+</style>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased flex min-h-screen">
+<script src="app-data.js"></script>
+
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-background border-r-2 border-on-surface p-md gap-md sticky top-0">
+    <div class="mb-xl">
+        <h1 class="font-h3 text-h3 font-black text-on-surface">Soluciones Técnicas</h1>
+        <p class="font-body-sm text-on-surface-variant">Andinas S.A.C.</p>
+    </div>
+    <nav class="flex flex-col gap-sm flex-grow">
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="dashboard principal personal.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="personal.html">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="font-body-md">Personal</span>
+        </a>
+        <!-- ACTIVE -->
+        <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl transition-all duration-200 ease-in-out" href="gestion incidencias.html">
+            <span class="material-symbols-outlined">error_outline</span>
+            <span class="font-body-md">Incidencias</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="reportes.html">
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md">Reportes</span>
+        </a>
+    </nav>
+    <div class="mt-auto border-t-2 border-on-surface pt-md">
+        <button data-action="logout" class="flex items-center gap-sm text-error font-bold hover:underline">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Cerrar Sesión</span>
+        </button>
+    </div>
+</aside>
+
+<main class="flex-grow flex flex-col min-w-0">
+    <!-- TopNavBar -->
+    <header class="flex justify-between items-center w-full px-margin py-sm bg-surface border-b-2 border-on-surface sticky top-0 z-20">
+        <div class="flex items-center gap-md">
+            <h2 class="font-h2 text-h2 font-bold text-on-surface">STA S.A.C.</h2>
+            <div class="hidden sm:flex bg-white border-2 border-on-surface px-md py-xs items-center gap-sm">
+                <span class="material-symbols-outlined text-outline">search</span>
+                <input id="search-inc" class="border-none focus:ring-0 bg-transparent text-body-sm w-48" placeholder="Buscar incidencia..." type="text"/>
+            </div>
+        </div>
+        <div class="flex items-center gap-lg">
+            <div class="flex items-center gap-md text-primary">
+                <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high transition-colors p-xs">notifications</span>
+                <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high transition-colors p-xs">settings</span>
+            </div>
+            <div class="flex items-center gap-sm">
+                <div class="w-10 h-10 border-2 border-on-surface overflow-hidden bg-primary-container flex items-center justify-center">
+                    <span data-user-avatar class="text-white font-bold">RM</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="p-margin flex flex-col gap-lg">
+        <!-- Page Header & Action -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+            <div>
+                <h1 class="font-h1 text-h1 text-on-surface">Gestión de Incidencias</h1>
+                <p class="font-body-md text-on-surface-variant">Visualiza y gestiona los reportes técnicos del sistema.</p>
+            </div>
+            <a href="registrar incidencia.html" class="bg-primary-container text-white px-xl py-md border-2 border-on-surface wireframe-shadow flex items-center gap-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:scale-95 font-button text-button">
+                <span class="material-symbols-outlined">add</span>
+                Nueva Incidencia
+            </a>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white border-2 border-on-surface p-md flex flex-wrap gap-md items-center wireframe-shadow-sm">
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-caps text-label-caps text-on-surface-variant">Estado</label>
+                <select id="filter-estado" class="border-2 border-on-surface px-md py-xs bg-white text-body-sm focus:border-primary-container focus:ring-0">
+                    <option value="">Todos los estados</option>
+                    <option>Pendiente</option>
+                    <option>En Proceso</option>
+                    <option>Resuelto</option>
+                    <option>Cerrado</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-caps text-label-caps text-on-surface-variant">Prioridad</label>
+                <select id="filter-prioridad" class="border-2 border-on-surface px-md py-xs bg-white text-body-sm focus:border-primary-container focus:ring-0">
+                    <option value="">Todas las prioridades</option>
+                    <option>Alta</option>
+                    <option>Media</option>
+                    <option>Baja</option>
+                </select>
+            </div>
+            <div class="ml-auto flex items-center gap-sm">
+                <button id="clear-filters" class="border-2 border-on-surface px-md py-xs hover:bg-surface-container-high transition-colors font-button text-body-sm">
+                    Limpiar Filtros
+                </button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white border-2 border-on-surface overflow-hidden wireframe-shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-container-low border-b-2 border-on-surface">
+                            <th class="px-md py-md font-label-caps text-label-caps">ID</th>
+                            <th class="px-md py-md font-label-caps text-label-caps">Título</th>
+                            <th class="px-md py-md font-label-caps text-label-caps">Solicitante</th>
+                            <th class="px-md py-md font-label-caps text-label-caps">Fecha</th>
+                            <th class="px-md py-md font-label-caps text-label-caps">Prioridad</th>
+                            <th class="px-md py-md font-label-caps text-label-caps">Estado</th>
+                            <th class="px-md py-md font-label-caps text-label-caps text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inc-tbody" class="divide-y divide-on-surface/10">
+                        <!-- JS populated -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="bg-surface-container-low px-md py-md border-t-2 border-on-surface flex items-center justify-between">
+                <div class="text-body-sm text-on-surface-variant" id="inc-pagination-info">
+                    Mostrando -- incidencias
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t-2 border-on-surface flex justify-around py-sm z-30">
+    <a class="flex flex-col items-center gap-xs text-on-surface-variant" href="personal.html">
+        <span class="material-symbols-outlined">groups</span>
+        <span class="text-[10px] font-bold">Personal</span>
+    </a>
+    <a class="flex flex-col items-center gap-xs text-primary-container" href="gestion incidencias.html">
+        <span class="material-symbols-outlined">error_outline</span>
+        <span class="text-[10px] font-bold">Incidencias</span>
+    </a>
+    <a class="flex flex-col items-center gap-xs text-on-surface-variant" href="reportes.html">
+        <span class="material-symbols-outlined">assessment</span>
+        <span class="text-[10px] font-bold">Reportes</span>
+    </a>
+</nav>
+
+<script>
+    const session = Auth.requireAuth();
+    if (session) {
+        setupNavigation("incidencias");
+
+        function getPriorityBadge(p) {
+            const map = {
+                "Alta": "bg-error-container text-on-error-container",
+                "Media": "bg-tertiary-fixed text-on-tertiary-fixed",
+                "Baja": "bg-surface-container text-on-surface-variant"
+            };
+            return `<span class="px-sm py-xs ${map[p] || ''} border border-on-surface text-xs font-bold uppercase">${p}</span>`;
+        }
+
+        function getStatusBadge(s) {
+            const map = {
+                "Pendiente": "bg-surface-container-highest",
+                "En Proceso": "bg-secondary-container",
+                "Resuelto": "bg-primary-fixed-dim text-on-primary-fixed",
+                "Cerrado": "bg-inverse-on-surface"
+            };
+            return `<span class="px-sm py-xs ${map[s] || ''} border border-on-surface text-xs font-bold uppercase">${s}</span>`;
+        }
+
+        function renderIncidencias() {
+            let data = [...DB.incidencias];
+
+            const estadoFilter = document.getElementById("filter-estado").value;
+            const prioridadFilter = document.getElementById("filter-prioridad").value;
+            const search = document.getElementById("search-inc").value.toLowerCase();
+
+            if (estadoFilter) data = data.filter(i => i.estado === estadoFilter);
+            if (prioridadFilter) data = data.filter(i => i.prioridad === prioridadFilter);
+            if (search) data = data.filter(i =>
+                i.titulo.toLowerCase().includes(search) ||
+                i.id.toLowerCase().includes(search) ||
+                i.solicitante.toLowerCase().includes(search)
+            );
+
+            const tbody = document.getElementById("inc-tbody");
+            tbody.innerHTML = data.map(i => `
+                <tr class="hover:bg-surface-container transition-colors">
+                    <td class="px-md py-md font-bold">#${i.id}</td>
+                    <td class="px-md py-md font-body-md">${i.titulo}</td>
+                    <td class="px-md py-md">${i.solicitante}</td>
+                    <td class="px-md py-md">${i.fecha}</td>
+                    <td class="px-md py-md">${getPriorityBadge(i.prioridad)}</td>
+                    <td class="px-md py-md">${getStatusBadge(i.estado)}</td>
+                    <td class="px-md py-md">
+                        <div class="flex justify-center gap-sm">
+                            <a href="detalle incidencias.html?id=${i.id}" class="p-xs hover:bg-primary-container hover:text-white border border-transparent hover:border-on-surface transition-all" title="Ver Detalle">
+                                <span class="material-symbols-outlined text-body-md">visibility</span>
+                            </a>
+                            <button class="p-xs hover:bg-primary-container hover:text-white border border-transparent hover:border-on-surface transition-all" title="Editar">
+                                <span class="material-symbols-outlined text-body-md">edit</span>
+                            </button>
+                            <button class="p-xs hover:bg-error hover:text-white border border-transparent hover:border-on-surface transition-all btn-delete-inc" data-id="${i.id}" title="Eliminar">
+                                <span class="material-symbols-outlined text-body-md">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join("");
+
+            document.getElementById("inc-pagination-info").textContent = `Mostrando ${data.length} de ${DB.incidencias.length} incidencias`;
+
+            // Delete handlers
+            document.querySelectorAll(".btn-delete-inc").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    if (confirm("¿Eliminar esta incidencia?")) {
+                        const idx = DB.incidencias.findIndex(i => i.id === btn.dataset.id);
+                        if (idx > -1) {
+                            DB.incidencias.splice(idx, 1);
+                            showToast("Incidencia eliminada");
+                            renderIncidencias();
+                        }
+                    }
+                });
+            });
+        }
+
+        document.getElementById("filter-estado").addEventListener("change", renderIncidencias);
+        document.getElementById("filter-prioridad").addEventListener("change", renderIncidencias);
+        document.getElementById("search-inc").addEventListener("input", renderIncidencias);
+        document.getElementById("clear-filters").addEventListener("click", () => {
+            document.getElementById("filter-estado").value = "";
+            document.getElementById("filter-prioridad").value = "";
+            document.getElementById("search-inc").value = "";
+            renderIncidencias();
+        });
+
+        renderIncidencias();
+    }
+</script>
+</body>
+</html>

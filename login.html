@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | STA S.A.C. - Sistema de Gestión Interna</title>
+<meta name="description" content="Acceso al sistema de gestión interna de Soluciones Técnicas Andinas S.A.C."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f7fafc",
+                    "surface-tint": "#0c56d0",
+                    "tertiary-container": "#a33500",
+                    "surface-container": "#ebeef0",
+                    "on-secondary-container": "#596376",
+                    "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff",
+                    "on-secondary-fixed-variant": "#3d4759",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "primary-container": "#0052cc",
+                    "on-error": "#ffffff",
+                    "tertiary": "#7b2600",
+                    "on-surface": "#181c1e",
+                    "surface-dim": "#d7dadc",
+                    "tertiary-fixed": "#ffdbcf",
+                    "outline-variant": "#c3c6d6",
+                    "on-tertiary-container": "#ffc6b2",
+                    "on-tertiary-fixed": "#380d00",
+                    "surface-bright": "#f7fafc",
+                    "surface": "#f7fafc",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "primary": "#003d9b",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#d9e3f9",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "on-secondary-fixed": "#121c2c",
+                    "secondary-container": "#d6e0f6",
+                    "inverse-primary": "#b2c5ff",
+                    "surface-container-low": "#f1f4f6",
+                    "on-surface-variant": "#434654",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dae2ff",
+                    "secondary": "#555f71",
+                    "inverse-on-surface": "#eef1f3",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133",
+                    "on-background": "#181c1e",
+                    "on-error-container": "#93000a",
+                    "outline": "#737685",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary-fixed-dim": "#bdc7dc",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+                "spacing": {
+                    "gutter": "24px",
+                    "margin": "32px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "unit": "8px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "xl": "40px"
+                },
+                "fontFamily": {
+                    "button": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "h1": ["Inter"],
+                    "h3": ["Inter"],
+                    "h2": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"]
+                },
+                "fontSize": {
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .wireframe-border {
+        border: 1px solid #181c1e;
+    }
+    .wireframe-border-heavy {
+        border: 2px solid #181c1e;
+    }
+    .shadow-offset {
+        box-shadow: 4px 4px 0px 0px #181c1e;
+    }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-6px); }
+        40%, 80% { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.4s ease-in-out; }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.5s ease-out; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<script src="app-data.js"></script>
+
+<main class="flex-grow flex items-center justify-center p-margin">
+<div class="w-full max-w-md fade-in">
+<div class="bg-surface p-xl wireframe-border-heavy shadow-offset flex flex-col gap-xl">
+    <header class="flex flex-col items-center text-center gap-sm">
+        <div class="w-16 h-16 wireframe-border flex items-center justify-center bg-surface-container-lowest">
+            <span class="material-symbols-outlined text-primary text-h1" data-icon="architecture">architecture</span>
+        </div>
+        <div class="flex flex-col">
+            <h1 class="font-h1 text-h1 text-on-surface tracking-tight">STA S.A.C.</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Soluciones Técnicas Andinas</p>
+        </div>
+    </header>
+
+    <!-- Error Message -->
+    <div id="error-msg" class="hidden bg-error-container text-on-error-container px-md py-sm wireframe-border text-body-sm font-semibold flex items-center gap-sm">
+        <span class="material-symbols-outlined text-[18px]">error</span>
+        <span id="error-text">Correo o contraseña incorrectos.</span>
+    </div>
+
+    <form id="login-form" class="flex flex-col gap-lg">
+        <div class="flex flex-col gap-xs">
+            <label class="font-label-caps text-label-caps text-on-surface-variant px-xs" for="email">CORREO ELECTRÓNICO</label>
+            <input class="w-full px-md py-md wireframe-border bg-surface-container-lowest focus:outline-none focus:ring-0 focus:border-primary-container transition-all placeholder:text-outline" id="email" name="email" placeholder="nombre@empresa.com" type="email" value="admin@sta.com.pe" required/>
+        </div>
+        <div class="flex flex-col gap-xs">
+            <div class="flex justify-between items-end px-xs">
+                <label class="font-label-caps text-label-caps text-on-surface-variant" for="password">CONTRASEÑA</label>
+                <a class="font-label-caps text-label-caps text-primary hover:underline" href="#">¿OLVIDASTE TU CONTRASEÑA?</a>
+            </div>
+            <input class="w-full px-md py-md wireframe-border bg-surface-container-lowest focus:outline-none focus:ring-0 focus:border-primary-container transition-all placeholder:text-outline" id="password" name="password" placeholder="••••••••" type="password" value="admin123" required/>
+        </div>
+        <div class="flex items-center gap-sm px-xs">
+            <input class="w-5 h-5 wireframe-border bg-surface-container-lowest rounded-none text-primary focus:ring-0" id="remember" type="checkbox" checked/>
+            <label class="font-body-sm text-body-sm" for="remember">Recordar sesión</label>
+        </div>
+        <button id="login-btn" class="w-full py-md bg-primary-container text-on-primary font-button text-button wireframe-border-heavy hover:brightness-110 active:translate-y-px active:shadow-none transition-all shadow-offset flex items-center justify-center gap-sm" type="submit">
+            <span id="btn-text">Ingresar</span>
+            <span id="btn-loader" class="hidden material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+        </button>
+    </form>
+
+    <!-- Credentials Info -->
+    <div class="bg-surface-container-low wireframe-border p-md">
+        <p class="font-label-caps text-label-caps text-primary mb-sm">CUENTAS DE PRUEBA</p>
+        <div class="space-y-xs text-body-sm text-on-surface-variant">
+            <p><strong class="text-on-surface">Admin:</strong> admin@sta.com.pe / admin123</p>
+            <p><strong class="text-on-surface">Técnico:</strong> carlos@sta.com.pe / carlos123</p>
+            <p><strong class="text-on-surface">Analista:</strong> maria@sta.com.pe / maria123</p>
+        </div>
+    </div>
+
+    <footer class="flex flex-col items-center gap-md border-t wireframe-border pt-lg">
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center">
+            ¿No tienes una cuenta de colaborador? <br/>
+            Contacta con el administrador de sistemas.
+        </p>
+        <div class="flex gap-md">
+            <div class="w-8 h-8 wireframe-border flex items-center justify-center hover:bg-surface-container transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-body-md" data-icon="help_outline">help_outline</span>
+            </div>
+            <div class="w-8 h-8 wireframe-border flex items-center justify-center hover:bg-surface-container transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-body-md" data-icon="language">language</span>
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="mt-xl grid grid-cols-2 gap-md opacity-40 grayscale">
+    <div class="h-32 wireframe-border bg-surface-container flex items-center justify-center overflow-hidden">
+        <img alt="Industrial site" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQfUiECcWCdtvFEwS_9Bzn9m_maTzMD3YLYLr-E4Ntdy4ocz9KNUJXtdiCvEJq42noV77C_2lTAWPd_khGNfsOdGcH_O2zhRGFTAhKBr3sL_jNI1FT5f-B8v41KBYAg5QrOwITbTh3vPuyIUUErBvAVjyaU-AOzMUvCcGXDL9ke7BV9wiH-aMWEsJL_gH2RsoDLHWPSviOUOT91vTZoQP7uARl0S9sunmReTlz_aR4ntOXnfimC4QJr-5pbgId_YfajiHlSFFEOPMb"/>
+    </div>
+    <div class="h-32 wireframe-border bg-surface-container flex items-center justify-center overflow-hidden">
+        <img alt="Technical team" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwgx9rPtVpv5uydL2UlDr0ywxzBotdTN6C6MYIB1kPafY66Wko4q9TsbB8P1YhQ36RkYq4BLPanPgIHTlt_WlLbOk7GAneZjHphWH86bSp07lGPmoYsNordBQshbLs7iWOfW2mQa6whurRds0kk8arWB2-eNm6Nvds2FS9R1UeFCffMtsBPONzqPcbIgCxrVzlR3MM2-g2mjVq3_ZZ9CdRjd0n6kjZxkDtZ7JguhUWaIJQWg8TGQ-lVHIurMvnTuU7F6aIz3eyl9vg"/>
+    </div>
+</div>
+</div>
+</main>
+
+<footer class="w-full py-md px-margin text-center border-t wireframe-border bg-surface">
+<p class="font-label-caps text-label-caps text-outline">© 2024 STA S.A.C. - SOLUCIONES TÉCNICAS ANDINAS - SISTEMA DE GESTIÓN INTERNA</p>
+</footer>
+
+<script>
+    // Si ya hay sesión activa, redirigir al dashboard
+    (function() {
+        const session = Auth.getSession();
+        if (session) {
+            window.location.href = "dashboard principal personal.html";
+        }
+    })();
+
+    const form = document.getElementById("login-form");
+    const errorMsg = document.getElementById("error-msg");
+    const errorText = document.getElementById("error-text");
+    const btnText = document.getElementById("btn-text");
+    const btnLoader = document.getElementById("btn-loader");
+    const loginBtn = document.getElementById("login-btn");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        // Hide previous errors
+        errorMsg.classList.add("hidden");
+
+        // Show loading
+        btnText.textContent = "Verificando...";
+        btnLoader.classList.remove("hidden");
+        loginBtn.disabled = true;
+
+        // Simulate network delay
+        setTimeout(() => {
+            const result = Auth.login(email, password);
+
+            if (result.success) {
+                btnText.textContent = "¡Bienvenido!";
+                btnLoader.classList.add("hidden");
+
+                // Redirect after short delay
+                setTimeout(() => {
+                    window.location.href = "dashboard principal personal.html";
+                }, 600);
+            } else {
+                // Show error
+                errorText.textContent = result.message;
+                errorMsg.classList.remove("hidden");
+                errorMsg.classList.add("shake");
+                setTimeout(() => errorMsg.classList.remove("shake"), 500);
+
+                // Reset button
+                btnText.textContent = "Ingresar";
+                btnLoader.classList.add("hidden");
+                loginBtn.disabled = false;
+            }
+        }, 800);
+    });
+</script>
+</body>
+</html>

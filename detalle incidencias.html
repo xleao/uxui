@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle de Incidencia | STA S.A.C.</title>
+<meta name="description" content="Detalle y seguimiento de incidencia técnica."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f7fafc", "surface-tint": "#0c56d0", "tertiary-container": "#a33500",
+                    "surface-container": "#ebeef0", "on-secondary-container": "#596376", "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff", "on-secondary-fixed-variant": "#3d4759", "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#b2c5ff", "primary-container": "#0052cc", "on-error": "#ffffff",
+                    "tertiary": "#7b2600", "on-surface": "#181c1e", "surface-dim": "#d7dadc",
+                    "tertiary-fixed": "#ffdbcf", "outline-variant": "#c3c6d6", "on-tertiary-container": "#ffc6b2",
+                    "on-tertiary-fixed": "#380d00", "surface-bright": "#f7fafc", "surface": "#f7fafc",
+                    "error": "#ba1a1a", "on-tertiary-fixed-variant": "#812800", "primary": "#003d9b",
+                    "surface-container-highest": "#e0e3e5", "on-tertiary": "#ffffff", "secondary-fixed": "#d9e3f9",
+                    "tertiary-fixed-dim": "#ffb59b", "on-secondary-fixed": "#121c2c", "secondary-container": "#d6e0f6",
+                    "inverse-primary": "#b2c5ff", "surface-container-low": "#f1f4f6", "on-surface-variant": "#434654",
+                    "error-container": "#ffdad6", "primary-fixed": "#dae2ff", "secondary": "#555f71",
+                    "inverse-on-surface": "#eef1f3", "on-primary-fixed-variant": "#0040a2", "surface-variant": "#e0e3e5",
+                    "inverse-surface": "#2d3133", "on-background": "#181c1e", "on-error-container": "#93000a",
+                    "outline": "#737685", "surface-container-high": "#e5e9eb", "secondary-fixed-dim": "#bdc7dc",
+                    "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff"
+                },
+                "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                "spacing": { "gutter": "24px", "margin": "32px", "sm": "8px", "md": "16px", "unit": "8px", "xs": "4px", "lg": "24px", "xl": "40px" },
+                "fontFamily": { "button": ["Inter"], "body-sm": ["Inter"], "h1": ["Inter"], "h3": ["Inter"], "h2": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "label-caps": ["Inter"] },
+                "fontSize": {
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; vertical-align: middle; }
+    .balsamiq-card { border: 2px solid #181c1e; box-shadow: 4px 4px 0px 0px #181c1e; }
+    .balsamiq-input { border: 1px solid #181c1e; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<script src="app-data.js"></script>
+
+<!-- Top Navigation Bar -->
+<header class="bg-surface border-b-2 border-on-surface flex justify-between items-center w-full px-margin py-sm sticky top-0 z-50">
+    <div class="flex items-center gap-md">
+        <a href="dashboard principal personal.html" class="font-h2 text-h2 font-bold text-on-surface hover:text-primary transition-colors">STA S.A.C.</a>
+    </div>
+    <div class="flex items-center gap-lg">
+        <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high transition-colors p-xs rounded-lg">notifications</span>
+            <span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high transition-colors p-xs rounded-lg">settings</span>
+            <div class="w-10 h-10 border-2 border-on-surface rounded-full overflow-hidden bg-primary-container flex items-center justify-center">
+                <span data-user-avatar class="text-white font-bold">RM</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="flex h-[calc(100vh-64px)]">
+    <!-- Side Navigation Bar -->
+    <nav class="bg-background border-r-2 border-on-surface h-full w-64 left-0 flex-col p-md gap-md hidden md:flex">
+        <div class="mb-lg">
+            <h2 class="font-h3 text-h3 font-black text-on-surface">Soluciones Técnicas</h2>
+            <p class="text-body-sm opacity-70">Andinas S.A.C.</p>
+        </div>
+        <div class="flex flex-col gap-sm">
+            <a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200" href="dashboard principal personal.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-body-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200" href="personal.html">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="font-body-md">Personal</span>
+            </a>
+            <a class="flex items-center gap-sm p-sm bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl transition-all duration-200" href="gestion incidencias.html">
+                <span class="material-symbols-outlined">error_outline</span>
+                <span class="font-body-md">Incidencias</span>
+            </a>
+            <a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200" href="reportes.html">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-body-md">Reportes</span>
+            </a>
+        </div>
+        <div class="mt-auto pt-md border-t border-on-surface/10">
+            <button data-action="logout" class="w-full flex items-center justify-center gap-sm p-sm border-2 border-on-surface font-button text-button hover:bg-error hover:text-on-error transition-all">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar Sesión
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-1 overflow-y-auto p-margin">
+        <div class="max-w-6xl mx-auto">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-xs mb-md text-on-surface-variant">
+                <a href="gestion incidencias.html" class="font-body-sm text-body-sm hover:text-primary">Incidencias</a>
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                <span class="font-body-sm text-body-sm font-bold text-on-surface" id="breadcrumb-id">Detalle</span>
+            </div>
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+                <div>
+                    <div class="flex items-center gap-sm mb-xs">
+                        <span class="text-label-caps uppercase text-on-surface-variant" id="detail-ticket-id">Ticket #---</span>
+                        <span class="w-1 h-1 bg-on-surface-variant rounded-full"></span>
+                        <span class="text-label-caps uppercase text-on-surface-variant" id="detail-fecha">Creado: --</span>
+                    </div>
+                    <h1 class="font-h1 text-h1 text-on-surface mb-sm" id="detail-titulo">Cargando...</h1>
+                    <div class="flex flex-wrap gap-sm" id="detail-badges">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+                <div class="flex gap-sm">
+                    <select id="status-select" class="bg-white border-2 border-on-surface px-md py-sm font-button text-body-sm focus:ring-0">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En Proceso">En Proceso</option>
+                        <option value="Resuelto">Resuelto</option>
+                        <option value="Cerrado">Cerrado</option>
+                    </select>
+                    <button id="btn-update-status" class="bg-primary text-on-primary font-button text-button px-lg py-sm border-2 border-on-surface shadow-[4px_4px_0px_0px_#181c1e] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                        Actualizar Estado
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+                <!-- Left: Description & Comments -->
+                <div class="lg:col-span-8 space-y-xl">
+                    <!-- Description -->
+                    <section class="bg-surface-container-lowest p-lg balsamiq-card">
+                        <div class="flex items-center gap-sm mb-md border-b-2 border-on-surface pb-sm">
+                            <span class="material-symbols-outlined">description</span>
+                            <h3 class="font-h3 text-h3">Descripción del Problema</h3>
+                        </div>
+                        <div class="space-y-md text-body-md leading-relaxed" id="detail-desc">
+                            <!-- JS populated -->
+                        </div>
+                    </section>
+
+                    <!-- Comments -->
+                    <section class="space-y-md">
+                        <div class="flex items-center gap-sm mb-md">
+                            <span class="material-symbols-outlined">forum</span>
+                            <h3 class="font-h3 text-h3">Comentarios Internos</h3>
+                        </div>
+                        <div id="comments-list" class="space-y-lg">
+                            <!-- JS populated -->
+                        </div>
+                        <div class="mt-xl p-md border-2 border-dashed border-on-surface bg-background">
+                            <textarea id="new-comment" class="w-full bg-white border-2 border-on-surface p-md text-body-md focus:ring-0 focus:border-primary min-h-[100px]" placeholder="Escribe una actualización interna..."></textarea>
+                            <div class="flex justify-end mt-sm">
+                                <button id="btn-add-comment" class="bg-secondary text-on-secondary font-button text-button px-md py-sm border-2 border-on-surface hover:bg-primary transition-colors">Enviar Comentario</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Sidebar -->
+                <aside class="lg:col-span-4 space-y-xl">
+                    <!-- Assigned Tech -->
+                    <div class="bg-surface-container-low p-md balsamiq-card">
+                        <h4 class="text-label-caps border-b border-on-surface pb-xs mb-md">TÉCNICO ASIGNADO</h4>
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 h-16 border-2 border-on-surface p-xs bg-primary-container flex items-center justify-center">
+                                <span id="tech-avatar" class="text-white text-xl font-bold">--</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-body-lg" id="tech-name">--</p>
+                                <p class="text-body-sm text-on-surface-variant">Especialista TI</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="bg-white p-md balsamiq-card">
+                        <h4 class="text-label-caps border-b border-on-surface pb-xs mb-md">INFORMACIÓN</h4>
+                        <div class="space-y-sm text-body-sm">
+                            <div class="flex justify-between"><span class="text-on-surface-variant">Categoría:</span><span class="font-bold" id="detail-cat">--</span></div>
+                            <div class="flex justify-between"><span class="text-on-surface-variant">Solicitante:</span><span class="font-bold" id="detail-sol">--</span></div>
+                            <div class="flex justify-between"><span class="text-on-surface-variant">Asignado:</span><span class="font-bold" id="detail-asig">--</span></div>
+                        </div>
+                    </div>
+
+                    <!-- SLA -->
+                    <div class="border-2 border-on-surface bg-background p-md">
+                        <h4 class="text-label-caps font-black mb-sm">SLA / TIEMPOS</h4>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="text-body-sm">Respuesta:</span>
+                            <span class="text-body-sm font-bold text-primary">CUMPLIDO</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-md">
+                            <span class="text-body-sm">Resolución:</span>
+                            <span class="text-body-sm font-bold text-error">12m RESTANTES</span>
+                        </div>
+                        <div class="w-full h-4 bg-surface-container-highest border border-on-surface rounded-full overflow-hidden">
+                            <div class="h-full bg-error w-[85%]"></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const session = Auth.requireAuth();
+    if (session) {
+        setupNavigation("incidencias");
+
+        // Get incident ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const incId = params.get("id") || "INC-402";
+
+        const incident = DB.incidencias.find(i => i.id === incId) || DB.incidencias[0];
+
+        if (incident) {
+            document.getElementById("breadcrumb-id").textContent = `#${incident.id}`;
+            document.getElementById("detail-ticket-id").textContent = `Ticket #${incident.id}`;
+            document.getElementById("detail-fecha").textContent = `Creado: ${incident.fecha}`;
+            document.getElementById("detail-titulo").textContent = incident.titulo;
+            document.getElementById("detail-desc").innerHTML = `
+                <p>${incident.descripcion}</p>
+                <p><strong>Impacto:</strong> Se requiere intervención inmediata para restaurar los servicios afectados.</p>
+            `;
+            document.getElementById("detail-cat").textContent = incident.categoria;
+            document.getElementById("detail-sol").textContent = incident.solicitante;
+            document.getElementById("detail-asig").textContent = incident.asignado;
+            document.getElementById("tech-name").textContent = incident.asignado;
+            document.getElementById("tech-avatar").textContent = incident.asignado.split(" ").map(w => w[0]).join("").substring(0, 2);
+
+            // Badges
+            const badgesEl = document.getElementById("detail-badges");
+            const prioColors = { "Alta": "bg-error-container text-on-error-container border-error", "Media": "bg-tertiary-fixed text-on-tertiary-fixed border-on-surface", "Baja": "bg-surface-container border-on-surface" };
+            const statusColors = { "Pendiente": "bg-surface-container-highest border-on-surface", "En Proceso": "bg-secondary-container text-on-secondary-container border-on-surface", "Resuelto": "bg-primary-fixed-dim text-on-primary-fixed border-on-surface", "Cerrado": "bg-inverse-on-surface border-on-surface" };
+            badgesEl.innerHTML = `
+                <span class="px-sm py-xs ${prioColors[incident.prioridad] || ''} font-bold text-label-caps rounded-lg">PRIORIDAD: ${incident.prioridad.toUpperCase()}</span>
+                <span class="px-sm py-xs ${statusColors[incident.estado] || ''} font-bold text-label-caps rounded-lg" id="status-badge">ESTADO: ${incident.estado.toUpperCase()}</span>
+                <span class="px-sm py-xs bg-surface-container-high border border-on-surface text-label-caps rounded-lg">${incident.categoria.toUpperCase()}</span>
+            `;
+
+            // Set current status in select
+            document.getElementById("status-select").value = incident.estado;
+
+            // Update status
+            document.getElementById("btn-update-status").addEventListener("click", () => {
+                const newStatus = document.getElementById("status-select").value;
+                incident.estado = newStatus;
+                document.getElementById("status-badge").textContent = `ESTADO: ${newStatus.toUpperCase()}`;
+                showToast(`Estado actualizado a "${newStatus}"`);
+            });
+
+            // Comments - simulated
+            const comments = [
+                { autor: "Carlos Mendoza (TI)", icono: "person", hora: "09:12 AM", texto: "Iniciando diagnóstico remoto. Verificando estado del servicio." },
+                { autor: "Soporte DBA", icono: "engineering", hora: "09:45 AM", texto: "He detectado un problema. Voy a proceder con las correcciones necesarias." }
+            ];
+
+            function renderComments() {
+                const list = document.getElementById("comments-list");
+                list.innerHTML = comments.map(c => `
+                    <div class="flex gap-md">
+                        <div class="flex-shrink-0 w-10 h-10 border-2 border-on-surface rounded-lg bg-surface-container-high flex items-center justify-center">
+                            <span class="material-symbols-outlined">${c.icono}</span>
+                        </div>
+                        <div class="flex-1 bg-surface-container-low p-md border-2 border-on-surface relative">
+                            <div class="absolute -left-[10px] top-4 w-4 h-4 bg-surface-container-low border-l-2 border-b-2 border-on-surface rotate-45"></div>
+                            <div class="flex justify-between items-center mb-xs">
+                                <span class="font-bold text-body-sm">${c.autor}</span>
+                                <span class="text-label-caps opacity-60">${c.hora}</span>
+                            </div>
+                            <p class="text-body-md">${c.texto}</p>
+                        </div>
+                    </div>
+                `).join("");
+            }
+
+            renderComments();
+
+            // Add comment
+            document.getElementById("btn-add-comment").addEventListener("click", () => {
+                const text = document.getElementById("new-comment").value.trim();
+                if (!text) return;
+                comments.push({
+                    autor: session.nombre,
+                    icono: "person",
+                    hora: new Date().toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" }),
+                    texto: text
+                });
+                document.getElementById("new-comment").value = "";
+                renderComments();
+                showToast("Comentario añadido");
+            });
+        }
+    }
+</script>
+</body>
+</html>
