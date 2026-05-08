@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Usuarios y Roles | STA S.A.C.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"background":"#f7fafc","primary-container":"#0052cc","on-primary":"#ffffff","on-primary-container":"#c4d2ff","on-surface":"#181c1e","surface":"#f7fafc","surface-container":"#ebeef0","surface-container-highest":"#e0e3e5","surface-container-low":"#f1f4f6","on-surface-variant":"#434654","primary":"#003d9b","error":"#ba1a1a","error-container":"#ffdad6","on-error":"#ffffff","on-error-container":"#93000a","secondary":"#555f71","secondary-container":"#d6e0f6","outline":"#737685","tertiary":"#7b2600","surface-container-high":"#e5e9eb","on-secondary":"#ffffff","surface-container-lowest":"#ffffff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{gutter:"24px",margin:"32px",sm:"8px",md:"16px",unit:"8px",xs:"4px",lg:"24px",xl:"40px"},fontFamily:{button:["Inter"],"body-sm":["Inter"],h1:["Inter"],h3:["Inter"],h2:["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"label-caps":["Inter"]},fontSize:{button:["16px",{lineHeight:"1",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"1.5",fontWeight:"400"}],h1:["32px",{lineHeight:"1.2",fontWeight:"700"}],h3:["20px",{lineHeight:"1.4",fontWeight:"600"}],h2:["24px",{lineHeight:"1.3",fontWeight:"600"}],"body-lg":["18px",{lineHeight:"1.6",fontWeight:"400"}],"body-md":["16px",{lineHeight:"1.6",fontWeight:"400"}],"label-caps":["12px",{lineHeight:"1",letterSpacing:"0.05em",fontWeight:"700"}]}}}}</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.bcard{border:2px solid #181c1e;box-shadow:4px 4px 0 0 #181c1e}
+.modal-bg{background:rgba(0,0,0,.5)}
+</style>
+</head>
+<body class="bg-background font-body-md text-on-surface flex min-h-screen">
+<script src="app-data.js"></script>
+
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col h-screen w-64 bg-background border-r-2 border-on-surface p-md gap-md sticky top-0">
+<div class="mb-xl"><h1 class="font-h3 text-h3 font-black">Soluciones Técnicas</h1><p class="font-body-sm text-on-surface-variant">Andinas S.A.C.</p></div>
+<nav class="flex flex-col gap-sm flex-grow">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all" href="dashboard principal personal.html"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all" href="personal.html"><span class="material-symbols-outlined">groups</span><span>Personal</span></a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all" href="gestion incidencias.html"><span class="material-symbols-outlined">error_outline</span><span>Incidencias</span></a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all" href="reportes.html"><span class="material-symbols-outlined">assessment</span><span>Reportes</span></a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl transition-all" href="usuarios.html"><span class="material-symbols-outlined">admin_panel_settings</span><span>Usuarios</span></a>
+</nav>
+<div class="mt-auto border-t-2 border-on-surface pt-md">
+<button data-action="logout" class="w-full flex items-center justify-center gap-sm border-2 border-on-surface py-sm px-md font-button text-button hover:bg-error hover:text-on-error transition-colors"><span class="material-symbols-outlined">logout</span>Cerrar Sesión</button>
+</div>
+</aside>
+
+<main class="flex-grow flex flex-col min-w-0">
+<!-- Header -->
+<header class="bg-surface border-b-2 border-on-surface flex justify-between items-center px-margin py-sm sticky top-0 z-10">
+<h2 class="font-h2 text-h2 font-bold">STA S.A.C.</h2>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 border-2 border-on-surface bg-primary-container flex items-center justify-center rounded-full"><span data-user-avatar class="text-white font-bold text-xs">RM</span></div>
+<span data-user-name class="text-body-sm font-semibold hidden lg:inline"></span>
+</div>
+</header>
+
+<div class="p-margin flex flex-col gap-xl" id="main-content">
+<!-- Denied message for non-admins -->
+<div id="access-denied" class="hidden bg-error-container border-2 border-on-surface p-xl bcard text-center">
+<span class="material-symbols-outlined text-error text-5xl mb-md block">lock</span>
+<h2 class="font-h1 text-h1 mb-sm">Acceso Denegado</h2>
+<p class="text-on-surface-variant">Solo los administradores pueden acceder a esta sección.</p>
+<a href="dashboard principal personal.html" class="inline-block mt-lg px-xl py-md bg-primary-container text-white border-2 border-on-surface font-button">Volver al Dashboard</a>
+</div>
+
+<!-- Admin content -->
+<div id="admin-panel" class="hidden flex flex-col gap-xl">
+
+<!-- Title -->
+<div class="flex justify-between items-start flex-wrap gap-md">
+<div><h1 class="font-h1 text-h1">Gestión de Usuarios y Roles</h1><p class="text-on-surface-variant">Administra las cuentas de acceso y permisos del sistema.</p></div>
+<button id="btn-new-user" class="bg-primary-container text-white px-lg py-md border-2 border-on-surface bcard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all font-button flex items-center gap-sm"><span class="material-symbols-outlined">person_add</span>Crear Usuario</button>
+</div>
+
+<!-- KPI -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg">
+<div class="bg-white p-lg border-2 border-on-surface bcard"><p class="font-label-caps text-label-caps text-on-surface-variant uppercase">TOTAL USUARIOS</p><p class="font-h1 text-h1 font-black mt-xs" id="kpi-users">-</p></div>
+<div class="bg-white p-lg border-2 border-on-surface bcard"><p class="font-label-caps text-label-caps text-on-surface-variant uppercase">ACTIVOS</p><p class="font-h1 text-h1 font-black mt-xs text-primary" id="kpi-active">-</p></div>
+<div class="bg-white p-lg border-2 border-on-surface bcard"><p class="font-label-caps text-label-caps text-on-surface-variant uppercase">INACTIVOS</p><p class="font-h1 text-h1 font-black mt-xs text-error" id="kpi-inactive">-</p></div>
+<div class="bg-white p-lg border-2 border-on-surface bcard"><p class="font-label-caps text-label-caps text-on-surface-variant uppercase">ROLES</p><p class="font-h1 text-h1 font-black mt-xs" id="kpi-roles">-</p></div>
+</div>
+
+<!-- ROLES SECTION -->
+<div>
+<div class="flex justify-between items-center mb-lg"><h2 class="font-h2 text-h2">Roles del Sistema</h2><button id="btn-new-role" class="px-md py-xs border-2 border-on-surface hover:bg-surface-container-highest font-button text-body-sm flex items-center gap-xs"><span class="material-symbols-outlined text-sm">add</span>Nuevo Rol</button></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg" id="roles-grid"></div>
+</div>
+
+<!-- USERS TABLE -->
+<div class="bg-white border-2 border-on-surface bcard">
+<div class="p-md border-b-2 border-on-surface flex justify-between items-center bg-surface-container-low">
+<h3 class="font-h3 text-h3">Cuentas de Usuario</h3>
+<div class="flex items-center gap-sm bg-white border-2 border-on-surface px-sm py-xs"><span class="material-symbols-outlined text-outline text-sm">search</span><input id="search-users" class="border-none focus:ring-0 bg-transparent text-body-sm w-40" placeholder="Buscar usuario..." type="text"/></div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container font-label-caps text-label-caps border-b-2 border-on-surface">
+<tr><th class="px-md py-md">Usuario</th><th class="px-md py-md">Email</th><th class="px-md py-md">Cargo</th><th class="px-md py-md">Rol</th><th class="px-md py-md">Estado</th><th class="px-md py-md">Creado</th><th class="px-md py-md text-center">Acciones</th></tr>
+</thead>
+<tbody id="users-tbody"></tbody>
+</table>
+</div>
+</div>
+
+</div><!-- /admin-panel -->
+</div>
+</main>
+
+<!-- MODAL: Crear/Editar Usuario -->
+<div id="modal-user" class="fixed inset-0 z-50 hidden items-center justify-center modal-bg">
+<div class="bg-white border-2 border-on-surface bcard p-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+<h3 class="font-h2 text-h2 mb-lg" id="modal-user-title">Crear Usuario</h3>
+<form id="form-user" class="space-y-md">
+<input type="hidden" id="edit-user-id"/>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">NOMBRE</label><input id="u-nombre" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" required/></div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">CARGO</label><input id="u-cargo" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" required/></div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">EMAIL</label><input id="u-email" type="email" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" required/></div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">CONTRASEÑA</label><input id="u-password" type="text" class="p-sm border-2 border-on-surface focus:border-primary-container focus:ring-0" placeholder="Mínimo 6 caracteres" required/></div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">ROL</label><select id="u-rol" class="p-sm border-2 border-on-surface focus:ring-0"></select></div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">ESTADO</label><select id="u-activo" class="p-sm border-2 border-on-surface focus:ring-0"><option value="true">Activo</option><option value="false">Inactivo</option></select></div>
+</div>
+<div class="flex justify-end gap-md pt-md border-t border-on-surface">
+<button type="button" onclick="closeModal('modal-user')" class="px-lg py-sm border-2 border-on-surface hover:bg-surface-container font-button">Cancelar</button>
+<button type="submit" class="px-lg py-sm bg-primary-container text-white border-2 border-on-surface font-button hover:bg-primary transition-colors">Guardar</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- MODAL: Crear/Editar Rol -->
+<div id="modal-role" class="fixed inset-0 z-50 hidden items-center justify-center modal-bg">
+<div class="bg-white border-2 border-on-surface bcard p-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+<h3 class="font-h2 text-h2 mb-lg" id="modal-role-title">Crear Rol</h3>
+<form id="form-role" class="space-y-md">
+<input type="hidden" id="edit-role-id"/>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">ID DEL ROL</label><input id="r-id" class="p-sm border-2 border-on-surface focus:ring-0 font-mono" placeholder="ej: auditor" required/></div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">NOMBRE</label><input id="r-nombre" class="p-sm border-2 border-on-surface focus:ring-0" placeholder="ej: Auditor" required/></div>
+</div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">DESCRIPCIÓN</label><input id="r-desc" class="w-full p-sm border-2 border-on-surface focus:ring-0" required/></div>
+<div class="flex flex-col gap-xs"><label class="font-label-caps text-label-caps">COLOR</label><input id="r-color" type="color" value="#003d9b" class="w-16 h-10 border-2 border-on-surface cursor-pointer"/></div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps">PERMISOS</label>
+<div class="grid grid-cols-2 gap-xs border-2 border-on-surface p-md bg-surface-container-low max-h-48 overflow-y-auto" id="permisos-checkboxes"></div>
+</div>
+<div class="flex justify-end gap-md pt-md border-t border-on-surface">
+<button type="button" onclick="closeModal('modal-role')" class="px-lg py-sm border-2 border-on-surface hover:bg-surface-container font-button">Cancelar</button>
+<button type="submit" class="px-lg py-sm bg-primary-container text-white border-2 border-on-surface font-button hover:bg-primary transition-colors">Guardar Rol</button>
+</div>
+</form>
+</div>
+</div>
+
+<script>
+const session = Auth.requireAuth();
+if(session){
+    setupNavigation("usuarios");
+
+    if(session.rol !== "admin"){
+        document.getElementById("access-denied").classList.remove("hidden");
+    } else {
+        document.getElementById("admin-panel").classList.remove("hidden");
+        document.getElementById("admin-panel").classList.add("flex");
+
+        // All possible permissions
+        const ALL_PERMS = ["dashboard","personal","personal.crear","personal.editar","personal.eliminar","incidencias","incidencias.crear","incidencias.editar","incidencias.eliminar","reportes","reportes.exportar","usuarios","usuarios.crear","usuarios.editar","usuarios.eliminar","configuracion"];
+
+        function openModal(id){ const m=document.getElementById(id); m.classList.remove("hidden"); m.classList.add("flex"); }
+        window.closeModal = function(id){ const m=document.getElementById(id); m.classList.add("hidden"); m.classList.remove("flex"); };
+
+        // ── RENDER ROLES ──
+        function renderRoles(){
+            const grid=document.getElementById("roles-grid");
+            grid.innerHTML = DB.roles.map(r=>{
+                const count = DB.usuarios.filter(u=>u.rol===r.id).length;
+                return `<div class="bg-white border-2 border-on-surface p-lg bcard flex flex-col gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-4 h-4 rounded-full border border-on-surface" style="background:${r.color}"></div>
+                        <h4 class="font-h3 text-h3 flex-grow">${r.nombre}</h4>
+                        <button class="material-symbols-outlined text-on-surface-variant hover:text-primary text-sm" onclick="editRole('${r.id}')">edit</button>
+                    </div>
+                    <p class="text-body-sm text-on-surface-variant">${r.descripcion}</p>
+                    <div class="flex justify-between items-center mt-auto pt-sm border-t border-on-surface">
+                        <span class="text-label-caps">${r.permisos.length} PERMISOS</span>
+                        <span class="text-label-caps">${count} USUARIO${count!==1?'S':''}</span>
+                    </div>
+                </div>`;
+            }).join("");
+            document.getElementById("kpi-roles").textContent = DB.roles.length;
+        }
+
+        // ── RENDER USERS ──
+        function renderUsers(){
+            const search = document.getElementById("search-users").value.toLowerCase();
+            let data = DB.usuarios;
+            if(search) data = data.filter(u=> u.nombre.toLowerCase().includes(search) || u.email.toLowerCase().includes(search) || u.rol.includes(search));
+
+            document.getElementById("kpi-users").textContent = DB.usuarios.length;
+            document.getElementById("kpi-active").textContent = DB.usuarios.filter(u=>u.activo).length;
+            document.getElementById("kpi-inactive").textContent = DB.usuarios.filter(u=>!u.activo).length;
+
+            const tbody = document.getElementById("users-tbody");
+            tbody.innerHTML = data.map(u=>{
+                const rol = DB.roles.find(r=>r.id===u.rol);
+                const rolName = rol ? rol.nombre : u.rol;
+                const rolColor = rol ? rol.color : "#737685";
+                const isSelf = u.id === session.id;
+                return `<tr class="border-b border-on-surface hover:bg-surface-container-low transition-colors ${!u.activo?'opacity-50':''}">
+                    <td class="px-md py-md"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-full border-2 border-on-surface flex items-center justify-center font-bold text-xs text-white" style="background:${rolColor}">${u.avatar}</div><span class="font-semibold">${u.nombre}</span>${isSelf?'<span class="text-[10px] bg-primary-container text-white px-xs rounded">TÚ</span>':''}</div></td>
+                    <td class="px-md py-md text-body-sm font-mono">${u.email}</td>
+                    <td class="px-md py-md text-body-sm">${u.cargo}</td>
+                    <td class="px-md py-md"><span class="px-sm py-xs text-xs font-bold uppercase border border-on-surface rounded" style="background:${rolColor}20;color:${rolColor}">${rolName}</span></td>
+                    <td class="px-md py-md"><span class="px-sm py-xs text-xs font-bold uppercase border ${u.activo?'bg-green-100 text-green-800 border-green-300':'bg-red-100 text-red-800 border-red-300'}">${u.activo?'Activo':'Inactivo'}</span></td>
+                    <td class="px-md py-md text-body-sm">${u.creadoEl||'--'}</td>
+                    <td class="px-md py-md text-center">
+                        <div class="flex justify-center gap-xs">
+                            <button class="material-symbols-outlined hover:text-primary p-xs text-sm" onclick="editUser(${u.id})" title="Editar">edit</button>
+                            <button class="material-symbols-outlined hover:text-primary p-xs text-sm" onclick="toggleUser(${u.id})" title="${u.activo?'Desactivar':'Activar'}">${u.activo?'person_off':'person'}</button>
+                            ${!isSelf?`<button class="material-symbols-outlined hover:text-error p-xs text-sm" onclick="deleteUser(${u.id})" title="Eliminar">delete</button>`:''}
+                        </div>
+                    </td>
+                </tr>`;
+            }).join("");
+        }
+
+        // ── POPULATE ROL SELECT ──
+        function fillRolSelect(){
+            const sel = document.getElementById("u-rol");
+            sel.innerHTML = DB.roles.map(r=>`<option value="${r.id}">${r.nombre}</option>`).join("");
+        }
+
+        // ── USER CRUD ──
+        document.getElementById("btn-new-user").addEventListener("click",()=>{
+            document.getElementById("modal-user-title").textContent="Crear Usuario";
+            document.getElementById("form-user").reset();
+            document.getElementById("edit-user-id").value="";
+            document.getElementById("u-password").required=true;
+            fillRolSelect();
+            openModal("modal-user");
+        });
+
+        window.editUser = function(id){
+            const u = DB.usuarios.find(x=>x.id===id);
+            if(!u) return;
+            document.getElementById("modal-user-title").textContent="Editar Usuario";
+            document.getElementById("edit-user-id").value=id;
+            document.getElementById("u-nombre").value=u.nombre;
+            document.getElementById("u-cargo").value=u.cargo;
+            document.getElementById("u-email").value=u.email;
+            document.getElementById("u-password").value=u.password;
+            document.getElementById("u-password").required=false;
+            document.getElementById("u-activo").value=String(u.activo);
+            fillRolSelect();
+            document.getElementById("u-rol").value=u.rol;
+            openModal("modal-user");
+        };
+
+        window.toggleUser = function(id){
+            const u=DB.usuarios.find(x=>x.id===id);
+            if(!u)return;
+            if(u.id===session.id){showToast("No puedes desactivarte a ti mismo","error");return;}
+            u.activo=!u.activo;
+            showToast(`${u.nombre} ${u.activo?'activado':'desactivado'}`);
+            renderUsers();
+        };
+
+        window.deleteUser = function(id){
+            if(id===session.id){showToast("No puedes eliminarte a ti mismo","error");return;}
+            if(!confirm("¿Eliminar este usuario?"))return;
+            const idx=DB.usuarios.findIndex(x=>x.id===id);
+            if(idx>-1){DB.usuarios.splice(idx,1);showToast("Usuario eliminado");renderUsers();}
+        };
+
+        document.getElementById("form-user").addEventListener("submit",e=>{
+            e.preventDefault();
+            const editId=document.getElementById("edit-user-id").value;
+            const nombre=document.getElementById("u-nombre").value.trim();
+            const cargo=document.getElementById("u-cargo").value.trim();
+            const email=document.getElementById("u-email").value.trim();
+            const password=document.getElementById("u-password").value;
+            const rol=document.getElementById("u-rol").value;
+            const activo=document.getElementById("u-activo").value==="true";
+            const avatar=nombre.split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase();
+
+            if(editId){
+                const u=DB.usuarios.find(x=>x.id===parseInt(editId));
+                if(u){
+                    u.nombre=nombre;u.cargo=cargo;u.email=email;u.rol=rol;u.activo=activo;u.avatar=avatar;
+                    if(password)u.password=password;
+                    showToast("Usuario actualizado");
+                }
+            } else {
+                if(DB.usuarios.find(x=>x.email.toLowerCase()===email.toLowerCase())){showToast("Ese email ya existe","error");return;}
+                DB.usuarios.push({id:Date.now(),email,password,nombre,cargo,rol,avatar,activo,creadoEl:new Date().toLocaleDateString("es-PE")});
+                showToast(`Usuario ${nombre} creado`);
+            }
+            closeModal("modal-user");renderUsers();renderRoles();
+        });
+
+        // ── ROLE CRUD ──
+        function fillPermCheckboxes(selected=[]){
+            document.getElementById("permisos-checkboxes").innerHTML=ALL_PERMS.map(p=>
+                `<label class="flex items-center gap-xs text-body-sm cursor-pointer"><input type="checkbox" value="${p}" class="perm-check w-4 h-4 border-on-surface" ${selected.includes(p)?'checked':''}><span>${p}</span></label>`
+            ).join("");
+        }
+
+        document.getElementById("btn-new-role").addEventListener("click",()=>{
+            document.getElementById("modal-role-title").textContent="Crear Rol";
+            document.getElementById("form-role").reset();
+            document.getElementById("edit-role-id").value="";
+            document.getElementById("r-id").readOnly=false;
+            fillPermCheckboxes([]);
+            openModal("modal-role");
+        });
+
+        window.editRole = function(id){
+            const r=DB.roles.find(x=>x.id===id);
+            if(!r)return;
+            document.getElementById("modal-role-title").textContent="Editar Rol";
+            document.getElementById("edit-role-id").value=id;
+            document.getElementById("r-id").value=r.id;
+            document.getElementById("r-id").readOnly=true;
+            document.getElementById("r-nombre").value=r.nombre;
+            document.getElementById("r-desc").value=r.descripcion;
+            document.getElementById("r-color").value=r.color;
+            fillPermCheckboxes(r.permisos);
+            openModal("modal-role");
+        };
+
+        document.getElementById("form-role").addEventListener("submit",e=>{
+            e.preventDefault();
+            const editId=document.getElementById("edit-role-id").value;
+            const id=document.getElementById("r-id").value.trim().toLowerCase();
+            const nombre=document.getElementById("r-nombre").value.trim();
+            const desc=document.getElementById("r-desc").value.trim();
+            const color=document.getElementById("r-color").value;
+            const permisos=[...document.querySelectorAll(".perm-check:checked")].map(c=>c.value);
+
+            if(editId){
+                const r=DB.roles.find(x=>x.id===editId);
+                if(r){r.nombre=nombre;r.descripcion=desc;r.color=color;r.permisos=permisos;showToast("Rol actualizado");}
+            } else {
+                if(DB.roles.find(x=>x.id===id)){showToast("Ese ID de rol ya existe","error");return;}
+                DB.roles.push({id,nombre,descripcion:desc,color,permisos});
+                showToast(`Rol "${nombre}" creado`);
+            }
+            closeModal("modal-role");renderRoles();fillRolSelect();renderUsers();
+        });
+
+        // Search
+        document.getElementById("search-users").addEventListener("input",renderUsers);
+
+        // Init
+        renderRoles();
+        renderUsers();
+    }
+}
+</script>
+</body></html>
