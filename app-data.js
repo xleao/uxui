@@ -335,24 +335,64 @@ function setupMobileNav(activePage, session) {
     marker.style.display = "none";
     document.body.appendChild(marker);
 
+    // Fix viewport para iOS safe areas (notch, home bar)
+    const vp = document.querySelector('meta[name="viewport"]');
+    if (vp && !vp.content.includes("viewport-fit")) {
+        vp.content = "width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no";
+    }
+
     // Inyectar estilos móviles
     const style = document.createElement("style");
     style.textContent = `
         @media(max-width:767px){
-            body>div>aside, body>aside { display:none!important; }
-            main, body>div>main { margin-left:0!important; }
-            .mobile-bottom-spacer { padding-bottom:70px!important; }
+            /* OCULTAR TODOS los sidebars desktop sin excepción */
+            aside:not(#mob-sidebar){ display:none!important; visibility:hidden!important; width:0!important; min-width:0!important; overflow:hidden!important; position:absolute!important; }
+            /* Quitar margin-left de main que deja el aside fijo */
+            main{ margin-left:0!important; width:100%!important; max-width:100vw!important; }
+            body>div>main{ margin-left:0!important; }
+            /* El flex container padre no debe mostrar el aside */
+            body>div.flex{ display:block!important; }
+            body>div.flex>aside{ display:none!important; }
+            /* Espaciado para bottom nav */
+            body{ padding-bottom:68px!important; }
+            /* Headers: más compactos */
+            header .hidden{ display:none!important; }
+            header{ padding-left:12px!important; padding-right:12px!important; }
+            /* Contenido principal: padding reducido */
+            .p-margin{ padding:16px!important; }
+            /* Grids: una columna */
+            .grid-cols-3,.md\\:grid-cols-3,.lg\\:grid-cols-3{ grid-template-columns:1fr!important; }
+            .grid-cols-4,.md\\:grid-cols-4,.lg\\:grid-cols-4{ grid-template-columns:1fr 1fr!important; }
+            .lg\\:grid-cols-5{ grid-template-columns:1fr!important; }
+            .lg\\:grid-cols-12{ grid-template-columns:1fr!important; }
+            .lg\\:col-span-3,.lg\\:col-span-2,.lg\\:col-span-8,.lg\\:col-span-4{ grid-column:span 1!important; }
+            /* Tablas scrolleables */
+            table{ font-size:13px!important; }
+            th,td{ padding:8px 6px!important; white-space:nowrap; }
+            /* Títulos más pequeños */
+            .text-h1,.font-h1{ font-size:24px!important; }
+            .text-h2,.font-h2{ font-size:20px!important; }
+            /* Modales full width */
+            .max-w-lg,.max-w-md{ max-width:calc(100vw - 32px)!important; }
+            /* Fix para h-screen con iOS Safari */
+            .h-screen{ height:100dvh!important; min-height:-webkit-fill-available!important; }
+            .h-\\[calc\\(100vh-64px\\)]{ height:calc(100dvh - 56px)!important; }
+            /* Flex direction para botones en fila */
+            .md\\:flex-row{ flex-direction:column!important; }
+            /* Ocultar elementos solo desktop */
+            .hidden.md\\:block,.hidden.md\\:flex,.hidden.sm\\:flex{ display:none!important; }
         }
-        #mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;opacity:0;pointer-events:none;transition:opacity .3s}
+        /* ── Componentes móviles ── */
+        #mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;opacity:0;pointer-events:none;transition:opacity .3s;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
         #mob-overlay.open{opacity:1;pointer-events:auto}
-        #mob-sidebar{position:fixed;top:0;left:-280px;width:270px;height:100%;background:#f7fafc;border-right:2px solid #181c1e;z-index:999;transition:left .3s;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+        #mob-sidebar{position:fixed;top:0;left:-290px;width:280px;height:100%;height:100dvh;background:#f7fafc;border-right:2px solid #181c1e;z-index:999;transition:left .3s ease;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
         #mob-sidebar.open{left:0}
-        #mob-bottomnav{position:fixed;bottom:0;left:0;right:0;background:#f7fafc;border-top:2px solid #181c1e;z-index:997;display:none;justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px)}
+        #mob-bottomnav{position:fixed;bottom:0;left:0;right:0;background:#f7fafc;border-top:2px solid #181c1e;z-index:997;display:none;justify-content:space-around;align-items:center;padding:6px 8px;padding-bottom:max(6px,env(safe-area-inset-bottom))}
         @media(max-width:767px){#mob-bottomnav{display:flex}}
-        #mob-bottomnav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:#434654;text-decoration:none;padding:4px 8px;transition:color .2s}
-        #mob-bottomnav a.active{color:#0052cc}
-        #mob-bottomnav a .material-symbols-outlined{font-size:22px}
-        #mob-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+        #mob-bottomnav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:#434654;text-decoration:none;padding:6px 10px;border-radius:8px;transition:all .2s;-webkit-tap-highlight-color:transparent}
+        #mob-bottomnav a.active{color:#0052cc;background:rgba(0,82,204,.1)}
+        #mob-bottomnav a .material-symbols-outlined{font-size:24px}
+        #mob-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;-webkit-tap-highlight-color:transparent;margin-right:8px}
         @media(max-width:767px){#mob-hamburger{display:flex;align-items:center}}
     `;
     document.head.appendChild(style);

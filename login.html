@@ -2,7 +2,7 @@
 <html class="light" lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" name="viewport"/>
 <title>Login | STA S.A.C. - Sistema de Gestión Interna</title>
 <meta name="description" content="Acceso al sistema de gestión interna de Soluciones Técnicas Andinas S.A.C."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -126,6 +126,16 @@
         to { opacity: 1; transform: translateY(0); }
     }
     .fade-in { animation: fadeIn 0.5s ease-out; }
+    @media(max-width:480px){
+        body { min-height: 100dvh; }
+        main { padding: 16px!important; align-items: flex-start!important; padding-top: max(24px, env(safe-area-inset-top))!important; }
+        .p-xl { padding: 20px!important; }
+        .gap-xl { gap: 20px!important; }
+        .shadow-offset { box-shadow: 3px 3px 0 0 #181c1e; }
+        .text-h1 { font-size: 26px!important; }
+        .mt-xl.grid { display: none!important; }
+        footer { padding-bottom: max(12px, env(safe-area-inset-bottom))!important; }
+    }
 </style>
 </head>
 <body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
