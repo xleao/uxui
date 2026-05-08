@@ -277,10 +277,30 @@ function setupNavigation(activePage) {
     const session = Auth.getSession();
     if (!session) return;
 
-    // Actualizar nombre/avatar del usuario en el header
+    // ── SISTEMA DE AVATAR/IMAGEN DE PERFIL ──
+    const avatarImg = getAvatarImage(session.email);
+
     document.querySelectorAll("[data-user-avatar]").forEach(el => {
-        el.textContent = session.avatar;
+        const container = el.closest("div") || el.parentElement;
+        if (avatarImg) {
+            // Reemplazar iniciales con imagen
+            el.style.display = "none";
+            if (!container.querySelector(".avatar-img")) {
+                const img = document.createElement("img");
+                img.src = avatarImg;
+                img.className = "avatar-img";
+                img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:inherit;";
+                container.appendChild(img);
+            }
+        } else {
+            el.textContent = session.avatar;
+        }
+        // Hacer clickeable para cambiar foto
+        container.style.cursor = "pointer";
+        container.title = "Click para cambiar tu foto";
+        container.addEventListener("click", () => openAvatarUpload(session));
     });
+
     document.querySelectorAll("[data-user-name]").forEach(el => {
         el.textContent = session.nombre;
     });
@@ -322,6 +342,127 @@ function setupNavigation(activePage) {
 
     // ── INYECTAR NAVEGACIÓN MÓVIL ──
     setupMobileNav(activePage, session);
+}
+
+// ════════════════════════════════════════════
+// SISTEMA DE IMAGEN DE PERFIL
+// ════════════════════════════════════════════
+
+function getAvatarImage(email) {
+    return localStorage.getItem("sta_avatar_" + email);
+}
+
+function setAvatarImage(email, base64) {
+    localStorage.setItem("sta_avatar_" + email, base64);
+}
+
+function openAvatarUpload(session) {
+    // Crear modal si no existe
+    let modal = document.getElementById("avatar-modal");
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "avatar-modal";
+        modal.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)";
+        modal.innerHTML = `
+            <div style="background:#f7fafc;border:2px solid #181c1e;box-shadow:6px 6px 0 0 #181c1e;padding:24px;max-width:400px;width:100%;font-family:Inter">
+                <h3 style="font-size:20px;font-weight:700;margin-bottom:16px">Cambiar Foto de Perfil</h3>
+                <div id="avatar-preview-area" style="width:120px;height:120px;border:2px solid #181c1e;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;background:#ebeef0">
+                    <span style="font-size:40px;font-weight:700;color:#0052cc" id="avatar-preview-text">${session.avatar}</span>
+                </div>
+                <input type="file" id="avatar-file-input" accept="image/*" style="display:none"/>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                    <button id="avatar-btn-select" style="width:100%;padding:12px;border:2px solid #181c1e;background:#0052cc;color:#fff;font-weight:600;font-size:14px;cursor:pointer;font-family:Inter;transition:all .2s" onmouseover="this.style.background='#003d9b'" onmouseout="this.style.background='#0052cc'">
+                        📷 Seleccionar Imagen
+                    </button>
+                    <button id="avatar-btn-remove" style="width:100%;padding:10px;border:2px solid #181c1e;background:#fff;color:#ba1a1a;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter;transition:all .2s" onmouseover="this.style.background='#ffdad6'" onmouseout="this.style.background='#fff'">
+                        Quitar Imagen
+                    </button>
+                    <button id="avatar-btn-close" style="width:100%;padding:10px;border:1px solid #737685;background:transparent;color:#434654;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter;margin-top:4px">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Cerrar al click en fondo
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+
+        // Botón seleccionar
+        document.getElementById("avatar-btn-select").addEventListener("click", () => {
+            document.getElementById("avatar-file-input").click();
+        });
+
+        // Botón quitar
+        document.getElementById("avatar-btn-remove").addEventListener("click", () => {
+            localStorage.removeItem("sta_avatar_" + session.email);
+            showToast("Imagen eliminada");
+            modal.style.display = "none";
+            location.reload();
+        });
+
+        // Botón cerrar
+        document.getElementById("avatar-btn-close").addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        // Al seleccionar archivo
+        document.getElementById("avatar-file-input").addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) {
+                showToast("La imagen es muy pesada (máx 5MB)", "error");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                // Redimensionar a 200x200 para ahorrar espacio
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = 200;
+                    canvas.height = 200;
+                    const ctx = canvas.getContext("2d");
+                    // Crop cuadrado desde el centro
+                    const min = Math.min(img.width, img.height);
+                    const sx = (img.width - min) / 2;
+                    const sy = (img.height - min) / 2;
+                    ctx.drawImage(img, sx, sy, min, min, 0, 0, 200, 200);
+                    const base64 = canvas.toDataURL("image/jpeg", 0.8);
+                    setAvatarImage(session.email, base64);
+                    showToast("¡Foto actualizada!");
+                    modal.style.display = "none";
+                    location.reload();
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Actualizar preview
+    const previewArea = document.getElementById("avatar-preview-area");
+    const previewText = document.getElementById("avatar-preview-text");
+    const currentImg = getAvatarImage(session.email);
+    if (currentImg) {
+        previewText.style.display = "none";
+        let existingImg = previewArea.querySelector("img");
+        if (!existingImg) {
+            existingImg = document.createElement("img");
+            existingImg.style.cssText = "width:100%;height:100%;object-fit:cover";
+            previewArea.appendChild(existingImg);
+        }
+        existingImg.src = currentImg;
+    } else {
+        previewText.style.display = "";
+        previewText.textContent = session.avatar;
+        const existingImg = previewArea.querySelector("img");
+        if (existingImg) existingImg.remove();
+    }
+
+    modal.style.display = "flex";
 }
 
 /**
