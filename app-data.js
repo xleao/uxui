@@ -6,6 +6,38 @@
  */
 
 const DB = {
+    // ─── ROLES DEL SISTEMA ───
+    roles: [
+        {
+            id: "admin",
+            nombre: "Administrador",
+            descripcion: "Acceso total al sistema. Puede gestionar usuarios, roles y toda la configuración.",
+            color: "#0052cc",
+            permisos: ["dashboard", "personal", "personal.crear", "personal.editar", "personal.eliminar", "incidencias", "incidencias.crear", "incidencias.editar", "incidencias.eliminar", "reportes", "reportes.exportar", "usuarios", "usuarios.crear", "usuarios.editar", "usuarios.eliminar", "configuracion"]
+        },
+        {
+            id: "supervisor",
+            nombre: "Supervisor",
+            descripcion: "Puede ver y gestionar personal e incidencias, pero no puede administrar usuarios.",
+            color: "#7b2600",
+            permisos: ["dashboard", "personal", "personal.crear", "personal.editar", "incidencias", "incidencias.crear", "incidencias.editar", "reportes", "reportes.exportar"]
+        },
+        {
+            id: "tecnico",
+            nombre: "Técnico",
+            descripcion: "Puede ver incidencias asignadas y reportar nuevas. Acceso limitado a personal.",
+            color: "#555f71",
+            permisos: ["dashboard", "personal", "incidencias", "incidencias.crear", "reportes"]
+        },
+        {
+            id: "visor",
+            nombre: "Visor (Solo lectura)",
+            descripcion: "Solo puede visualizar información. No puede crear, editar ni eliminar nada.",
+            color: "#737685",
+            permisos: ["dashboard", "personal", "incidencias", "reportes"]
+        }
+    ],
+
     // ─── USUARIOS (credenciales de login) ───
     usuarios: [
         {
@@ -15,7 +47,9 @@ const DB = {
             nombre: "Ricardo Mendoza",
             cargo: "Administrador de Sistemas",
             rol: "admin",
-            avatar: "RM"
+            avatar: "RM",
+            activo: true,
+            creadoEl: "01/02/2018"
         },
         {
             id: 2,
@@ -24,7 +58,9 @@ const DB = {
             nombre: "Carlos Huamán",
             cargo: "Técnico Electricista Senior",
             rol: "tecnico",
-            avatar: "CH"
+            avatar: "CH",
+            activo: true,
+            creadoEl: "15/03/2019"
         },
         {
             id: 3,
@@ -32,8 +68,43 @@ const DB = {
             password: "maria123",
             nombre: "Maria Rodriguez",
             cargo: "Analista Contable",
-            rol: "admin",
-            avatar: "MR"
+            rol: "supervisor",
+            avatar: "MR",
+            activo: true,
+            creadoEl: "22/11/2021"
+        },
+        {
+            id: 4,
+            email: "ana@sta.com.pe",
+            password: "ana123",
+            nombre: "Ana Castillo",
+            cargo: "Supervisor de Campo",
+            rol: "supervisor",
+            avatar: "AC",
+            activo: true,
+            creadoEl: "10/08/2020"
+        },
+        {
+            id: 5,
+            email: "diego@sta.com.pe",
+            password: "diego123",
+            nombre: "Diego Flores",
+            cargo: "Técnico de Redes",
+            rol: "tecnico",
+            avatar: "DF",
+            activo: true,
+            creadoEl: "11/07/2021"
+        },
+        {
+            id: 6,
+            email: "lucia@sta.com.pe",
+            password: "lucia123",
+            nombre: "Lucía Vargas",
+            cargo: "Asistente de RRHH",
+            rol: "visor",
+            avatar: "LV",
+            activo: false,
+            creadoEl: "20/04/2023"
         }
     ],
 
@@ -117,20 +188,25 @@ const Auth = {
         const user = DB.usuarios.find(
             u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
         );
-        if (user) {
-            const session = {
-                id: user.id,
-                email: user.email,
-                nombre: user.nombre,
-                cargo: user.cargo,
-                rol: user.rol,
-                avatar: user.avatar,
-                loginTime: new Date().toISOString()
-            };
-            localStorage.setItem("sta_session", JSON.stringify(session));
-            return { success: true, user: session };
+        if (!user) {
+            return { success: false, message: "Correo o contraseña incorrectos." };
         }
-        return { success: false, message: "Correo o contraseña incorrectos." };
+        if (!user.activo) {
+            return { success: false, message: "Tu cuenta está desactivada. Contacta al administrador." };
+        }
+        const rolObj = DB.roles.find(r => r.id === user.rol);
+        const session = {
+            id: user.id,
+            email: user.email,
+            nombre: user.nombre,
+            cargo: user.cargo,
+            rol: user.rol,
+            rolNombre: rolObj ? rolObj.nombre : user.rol,
+            avatar: user.avatar,
+            loginTime: new Date().toISOString()
+        };
+        localStorage.setItem("sta_session", JSON.stringify(session));
+        return { success: true, user: session };
     },
 
     /**
@@ -159,6 +235,33 @@ const Auth = {
             return null;
         }
         return session;
+    },
+
+    /**
+     * Verifica si el usuario actual es admin.
+     */
+    isAdmin() {
+        const session = this.getSession();
+        return session && session.rol === "admin";
+    },
+
+    /**
+     * Verifica si el usuario tiene un permiso específico.
+     */
+    hasPermission(permiso) {
+        const session = this.getSession();
+        if (!session) return false;
+        const rol = DB.roles.find(r => r.id === session.rol);
+        return rol ? rol.permisos.includes(permiso) : false;
+    },
+
+    /**
+     * Devuelve el objeto rol completo del usuario actual.
+     */
+    getCurrentRole() {
+        const session = this.getSession();
+        if (!session) return null;
+        return DB.roles.find(r => r.id === session.rol) || null;
     }
 };
 
@@ -168,21 +271,45 @@ const Auth = {
 
 /**
  * Configura la navegación del sidebar y el botón de logout.
- * activePage: nombre de la página activa (ej: "personal", "incidencias", "reportes", "dashboard")
+ * activePage: nombre de la página activa
  */
 function setupNavigation(activePage) {
     const session = Auth.getSession();
     if (!session) return;
 
-    // Actualizar nombre/avatar del usuario en el header si existe
-    const userAvatarEls = document.querySelectorAll("[data-user-avatar]");
-    userAvatarEls.forEach(el => {
+    // Actualizar nombre/avatar del usuario en el header
+    document.querySelectorAll("[data-user-avatar]").forEach(el => {
         el.textContent = session.avatar;
     });
-
-    const userNameEls = document.querySelectorAll("[data-user-name]");
-    userNameEls.forEach(el => {
+    document.querySelectorAll("[data-user-name]").forEach(el => {
         el.textContent = session.nombre;
+    });
+    document.querySelectorAll("[data-user-role]").forEach(el => {
+        el.textContent = session.rolNombre || session.rol;
+    });
+
+    // Inyectar link "Usuarios" en el sidebar SOLO para admins
+    if (session.rol === "admin") {
+        document.querySelectorAll("nav").forEach(nav => {
+            const reportesLink = nav.querySelector('a[href*="reportes"]');
+            if (reportesLink && !nav.querySelector('a[href*="usuarios"]')) {
+                const isActive = activePage === "usuarios";
+                const link = document.createElement("a");
+                link.href = "usuarios.html";
+                link.className = isActive
+                    ? reportesLink.className.replace(/text-on-surface-variant/, "").replace(/hover:bg-surface-container-highest/, "") + " bg-primary-container text-on-primary-container font-bold border-2 border-on-surface rounded-xl"
+                    : reportesLink.className;
+                link.innerHTML = '<span class="material-symbols-outlined">admin_panel_settings</span><span class="font-body-md">Usuarios</span>';
+                reportesLink.insertAdjacentElement("afterend", link);
+            }
+        });
+    }
+
+    // Ocultar elementos que requieren permisos específicos
+    document.querySelectorAll("[data-permiso]").forEach(el => {
+        if (!Auth.hasPermission(el.dataset.permiso)) {
+            el.style.display = "none";
+        }
     });
 
     // Configurar botones de logout
